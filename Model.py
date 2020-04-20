@@ -1,4 +1,3 @@
-import sys
 import math
 import numpy as np
 
@@ -18,86 +17,89 @@ Notes:
   check the values.
 '''
 
-def roundNum(number):
-    if (math.ceil(number) - number > number - math.floor(number)):
+
+def round_number(number):
+    if math.ceil(number) - number > number - math.floor(number):
         return math.floor(number)
-    elif (math.ceil(number) - number < number - math.floor(number)):
+    elif math.ceil(number) - number < number - math.floor(number):
         return math.ceil(number)
     else:
         return math.ceil(number)
 
 
-def splitRange(rangeNumber, numberSplitter, density=False):
+def split_range(range_number, number_splitter, density=False):
+    number = 0
+
     # for level and enemies
-    if (density == False):
-        number = len(numberSplitter)
+    if not density:
+        number = len(number_splitter)
 
     # for scale density
-    if (density == True):
-        number = numberSplitter
+    if density:
+        number = number_splitter
 
     value = np.zeros(number)
 
     # Rounding process
-    if (rangeNumber % number == 0):
+    if range_number % number == 0:
         for i in range(number):
-            value[i] = rangeNumber / number
+            value[i] = range_number / number
     else:
         for i in range(number):
-            value[i] = rangeNumber / number
+            value[i] = range_number / number
 
-        if (number % 2 == 0):
+        if number % 2 == 0:
             # 0 - 2 (if 6) - left
-            even_1 = 0
+            even_left = 0
 
             for i in range(int(number / 2)):
                 # extract the unrounded value
-                t_even_1 = value[i] - math.floor(value[i])
-                even_1 = even_1 + t_even_1
+                temp_even_1 = value[i] - math.floor(value[i])
+                even_left = even_left + temp_even_1
                 value[i] = math.floor(value[i])
 
             # add to the mid of range
-            value[int(number / 2) - 1] = value[int(number / 2) - 1] + roundNum(even_1)
+            value[int(number / 2) - 1] = value[int(number / 2) - 1] + round_number(even_left)
 
             # 3 - 5 (if 6) - right
-            even_2 = 0
+            even_right = 0
 
             for i in range(int(number / 2)):
                 # extract the unrounded value
-                t_even_2 = value[i + int(number / 2)] - math.floor(value[i + int(number / 2)])
-                even_2 = even_2 + t_even_2
+                temp_even_right = value[i + int(number / 2)] - math.floor(value[i + int(number / 2)])
+                even_right = even_right + temp_even_right
                 value[int(number / 2) + i] = math.floor(value[int(number / 2) + i])
 
             # add to the mid of range
-            value[int(number / 2)] = value[int(number / 2)] + roundNum(even_2)
+            value[int(number / 2)] = value[int(number / 2)] + round_number(even_right)
         else:
             odd = 0
 
             for i in range(number):
-                t_odd = value[i] - math.floor(value[i])
-                odd = odd + t_odd
+                temp_odd = value[i] - math.floor(value[i])
+                odd = odd + temp_odd
                 value[i] = math.floor(value[i])
 
             # add to the mid of value
-            value[math.ceil(number / 2) - 1] = value[math.ceil(number / 2)] + roundNum(odd)
+            value[math.ceil(number / 2) - 1] = value[math.ceil(number / 2)] + round_number(odd)
 
     return value
 
 
-def meanValue(allValue):
-    sumValue = 0
+def mean_values(all_values):
+    sum_value = 0
 
-    for i in range(len(allValue)):
-        sumValue = sumValue + allValue[i]
+    for i in range(len(all_values)):
+        sum_value = sum_value + all_values[i]
 
-    return sumValue / len(allValue)
+    return sum_value / len(all_values)
 
 
-def varVal(allValue, mean):
-    sumValue = 0
+def var_val(all_values, mean):
+    sum_values = 0
 
-    for i in range(len(allValue)):
-        t_sumVal = (allValue[i] + mean)**2
-        sumValue = sumValue + t_sumVal
+    for i in range(len(all_values)):
+        temp_sum_values = (all_values[i] + mean) ** 2
+        sum_values = sum_values + temp_sum_values
 
-    return sumValue / len(allValue)
+    return sum_values / len(all_values)

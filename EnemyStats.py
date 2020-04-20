@@ -33,27 +33,27 @@ def all_enemies():
     #   enemy_name = ["alpha", "beta", "charlie", "delta"]
 
     enemy_name = "Enemy"
-    enemies.rangeEnemyName(enemy_name, "Name", auto="yes")
+    enemies.range_enemy_name(enemy_name, "Name", auto="yes")
 
     # [RANGE ENEMIES LEVELS]
     min_level = 1
     levels_class = ["Easy", "Medium", "High"]
     graph_title = "Player Level Distribution"
 
-    enemies.rangeLevels(min_level, levels_class, 'Levels', density=True, scale=len(levels_class))
-    enemies.showRangeLevels(graph_title, title=False)
+    enemies.range_levels(min_level, levels_class, 'Levels', scale=len(levels_class))
+    enemies.show_range_levels(graph_title, title=False)
 
     # [RANGE ENEMIES HP]
     min_hp = 40
     max_hp = 520
 
-    enemies.rangeHealthPoints(min_hp, max_hp, 'HP')
+    enemies.range_health_points(min_hp, max_hp, 'HP')
 
     # [RANGE ENEMIES MP]
     min_mp = 20
     max_mp = 490
 
-    enemies.rangeMagicPoints(min_mp, max_mp, 'MP')
+    enemies.range_magic_points(min_mp, max_mp, 'MP')
 
     # [RANGE ENEMIES TYPE]
     enemy_type = ['Mixed', 'Hard Magic', 'Soft Magic', 'Hard Strength', 'Soft Strength']
@@ -63,8 +63,8 @@ def all_enemies():
     # distribute_percent = [40, 10, 20, 10, 20]
     distribute_percent = [34, 13, 20, 13, 20]
 
-    enemies.rangeEnemyType(enemy_type, distribute_percent, 'Type')
-    enemies.showRangeEnemyType(graph_title, title=False)
+    enemies.range_enemy_type(enemy_type, distribute_percent, 'Type')
+    enemies.show_range_enemy_type(graph_title, title=False)
 
     # [RANGE ENEMIES WEAKNESSES]
     # CHARACTER ELEMENT DAMAGE IMPACT.
@@ -77,8 +77,8 @@ def all_enemies():
     graph_title = "Enemy Element Distribution"
 
     # Override this function when have different weaknesses concept!
-    enemies.rangeElementWeak(element_name, damage_name)
-    enemies.showElementWeak(graph_title, title=False)
+    enemies.range_element_weak(element_name, damage_name)
+    enemies.show_element_weak(graph_title, title=False)
 
     # [RANGE ENEMIES STATS]
     stats_name = ['Strength', 'Magic', 'Endurance', 'Speed', 'Luck']
@@ -86,11 +86,11 @@ def all_enemies():
     basic_min_stats = [2, 2, 2, 2, 2]
     graph_title = "Enemy Stats Distribution"
 
-    enemies.rangeStats(stats_name, basic_min_stats, basic_max_stats)
-    enemies.showRangeStats(graph_title, title=False)
+    enemies.range_stats(stats_name, basic_min_stats, basic_max_stats)
+    enemies.show_range_stats(graph_title, title=False)
 
     # Parse All Data to The Tables
-    enemies.genEnemy()
+    enemies.generate_enemy()
 
 
 if __name__ == "__main__":

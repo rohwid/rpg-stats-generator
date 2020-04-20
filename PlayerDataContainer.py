@@ -19,304 +19,302 @@ Notes:
 - Every common function set to be more flexible and ready to be "override".
 '''
 
-import Visualization as Vs
+import Visualization as Vis
 
 
 class Player:
     def __init__(self, max_level):
-        self.maxLevel = max_level
-        self.startLevel = 0
-        self.rangeLevel = []
-        self.rangeHP = []
-        self.rangeMP = []
-        self.nameElement = []
-        self.elementContainer = []
-        self.nameStats = []
-        self.statsContainer = []
-        self.mainColumn = []
-        self.dataContainer = []
+        self.max_level = max_level
+        self.start_level = 0
+        self.range_level = np.array([])
+        self.range_hp = np.array([])
+        self.range_mp = np.array([])
+        self.name_element = np.array([])
+        self.element_container = np.array([])
+        self.name_stats = np.array([])
+        self.stats_container = np.array([])
+        self.main_column = np.array([])
+        self.data_container = np.array([])
 
     @staticmethod
     def set_column_main(pref, column_name, column_info):
         if pref == 0:
-            if column_info == []:
+            if not column_info:
                 column_info = [column_name, 'HP(Auto)']
 
             if column_info[1] != 'HP(Auto)':
                 column_info[0] = column_name
 
         if pref == 1:
-            if column_info == []:
+            if not column_info:
                 column_info = ['Levels (Auto)', column_info]
 
             if column_info[0] != 'Level(Auto)':
                 column_info[1] = column_name
 
-        if (pref == 2):
-            if (len(column_info) == 2):
+        if pref == 2:
+            if len(column_info) == 2:
                 column_info.append(column_name)
             else:
                 sys.exit("[ERROR] Please define HP and Level first!")
 
         return column_info
 
-    "Levels"
+    def range_levels(self, start_level, column_name):
+        self.start_level = start_level
+        self.range_level = np.arange(1, (self.max_level - start_level) + 2)
 
-    def rangeLevels(self, startLevel, columnName):
-        self.startLevel = startLevel
-        self.rangeLevel = np.arange(1, (self.maxLevel - startLevel) + 2)
+        self.main_column = Player.set_column_main(0, column_name, self.main_column)
 
-        self.mainColumn = Player.set_column_main(columnName, self.mainColumn)
-
-    def showRangeLevels(self):
+    def show_range_levels(self):
         print("[DEBUG] ~ LEVELS")
         print("[DEBUG] Range Levels: ")
-        print(self.rangeLevel)
+        print(self.range_level)
         print("\n\n")
 
-    "Health Points"
+    def range_health_points(self, start_hp, second_hp, column_name):
+        self.range_hp = np.arange(start_hp, start_hp + (self.max_level * (second_hp - start_hp)),
+                                  second_hp - start_hp)
 
-    def rangeHealtPoints(self, startHP, secondHP, columnName):
-        self.rangeHP = np.arange(startHP, startHP + (self.maxLevel * (secondHP - startHP)), secondHP - startHP)
+        self.main_column = Player.set_column_main(1, column_name, self.main_column)
 
-        self.mainColumn = Player.set_column_main(columnName, self.mainColumn)
-
-    def showRangeHealtPoints(self, graphTitle, title=None):
+    def show_range_health_points(self, graph_title, title=None):
         print("[DEBUG] ~ NAMES")
         print("[DEBUG] Range HP: ")
-        print(self.rangeHP)
+        print(self.range_hp)
 
-        Vs.playerHPGraph(self.rangeLevel, self.rangeHP, graphTitle, title)
-
+        Vis.player_hp_graph(self.range_level, self.range_hp, graph_title, title)
         print("\n\n")
 
-    "Magic Points"
+    def range_magic_points(self, start_mp, second_mp, column_name):
+        self.range_mp = np.arange(start_mp, start_mp + (self.max_level * (second_mp - start_mp)),
+                                  second_mp - start_mp)
 
-    def rangeMagicPoints(self, startMP, secondMP, columnName):
-        self.rangeMP = np.arange(startMP, startMP + (self.maxLevel * (secondMP - startMP)), secondMP - startMP)
+        self.main_column = Player.set_column_main(2, column_name, self.main_column)
 
-        self.mainColumn = Player.set_column_main(columnName, self.mainColumn)
-
-    def showRangeMagicPoints(self, graphTitle, title=None):
+    def show_range_magic_points(self, graph_title, title=None):
         print("[DEBUG] ~ MP")
+        print("[DEBUG] Range MP: ")
+        print(self.range_mp)
 
-        if (self.rangeMP == []):
-            print("[DEBUG] The game is not using MP.")
-        else:
-            print("[DEBUG] Range MP: ")
-            print(self.rangeMP)
-
-            Vs.playerMPGraph(self.rangeLevel, self.rangeMP, graphTitle, title)
+        Vis.player_mp_graph(self.range_level, self.range_mp, graph_title, title)
 
         print("\n\n")
 
-    "Element Weaknesses"
+    def range_element_weak(self, name_element, char_weak_number):
+        self.name_element = name_element
 
-    def rangeElementWeak(self, nameElement, charWeakNumber):
-        self.nameElement = nameElement
-
-        for i in range(len(charWeakNumber)):
-            if (charWeakNumber[i] == 2):
-                if (self.elementContainer == []):
-                    self.elementContainer = np.full((self.maxLevel, 1), 2)
+        for i in range(len(char_weak_number)):
+            if char_weak_number[i] == 2:
+                if self.element_container.all:
+                    self.element_container = np.full((self.max_level, 1), 2)
                 else:
-                    self.elementContainer = np.concatenate((self.elementContainer, np.full((self.maxLevel, 1), 2)),
-                                                           axis=1)
+                    self.element_container = np.concatenate((self.element_container,
+                                                             np.full((self.max_level, 1), 2)), axis=1)
 
-            if (charWeakNumber[i] == 1):
-                if (self.elementContainer == []):
-                    self.elementContainer = np.ones((self.maxLevel, 1))
+            if char_weak_number[i] == 1:
+                if self.element_container.all:
+                    self.element_container = np.ones((self.max_level, 1))
                 else:
-                    self.elementContainer = np.concatenate((self.elementContainer, np.ones((self.maxLevel, 1))), axis=1)
+                    self.element_container = np.concatenate((self.element_container,
+                                                             np.ones((self.max_level, 1))), axis=1)
 
-            if (charWeakNumber[i] == 0):
-                tempContnr = np.zeros((self.maxLevel, 1))
-                if (self.elementContainer == []):
-                    self.elementContainer = np.zeros((self.maxLevel, 1))
+            if char_weak_number[i] == 0:
+                if self.element_container.all:
+                    self.element_container = np.zeros((self.max_level, 1))
                 else:
-                    self.elementContainer = np.concatenate((self.elementContainer, np.zeros((self.maxLevel, 1))),
-                                                           axis=1)
+                    self.element_container = np.concatenate((self.element_container,
+                                                             np.zeros((self.max_level, 1))), axis=1)
 
-    def showElmntWeak(self):
+    def show_element_weak(self):
         print("[DEBUG] ~ WEAKNESSES")
-
-        if (self.nameElement == []):
-            print("[DEBUG] The game is not using Element of Weaknesses.")
-        else:
-            print("[DEBUG] List of characters elements: ", self.nameElement)
-            print("[DEBUG] List of characters elements stats: ")
-            print(self.elementContainer)
+        print("[DEBUG] List of characters elements: ", self.name_element)
+        print("[DEBUG] List of characters elements stats: ")
+        print(self.element_container)
 
         print("\n\n")
 
-    "Player Stats"
+    def range_stats(self, name_stats, stats_max_value, stats_to_assign):
+        self.name_stats = name_stats
+        self.stats_container = np.zeros((self.max_level, len(stats_max_value)))
 
-    def rangeStats(self, nameStats, statsMaxValue, statsToAssign):
-        self.nameStats = nameStats
-        self.statsContainer = np.zeros((self.maxLevel, len(statsMaxValue)))
+        distribute_limit = np.zeros((len(stats_to_assign), len(stats_max_value)))
 
-        distribLimit = np.zeros((len(statsToAssign), len(statsMaxValue)))
+        for i in range(len(stats_max_value)):
+            limit_cache = np.zeros(len(stats_to_assign))
+            check_limit = 0
 
-        for i in range(len(statsMaxValue)):
-            limitCache = np.zeros(len(statsToAssign))
-            checkLimit = 0
+            for j in range(len(stats_to_assign)):
+                for k in range(len(stats_to_assign)):
+                    check_limit = check_limit + limit_cache[k]
 
-            for j in range(len(statsToAssign)):
-                for k in range(len(statsToAssign)):
-                    checkLimit = checkLimit + limitCache[k]
-
-                if (checkLimit > statsMaxValue[i]):
+                if check_limit > stats_max_value[i]:
                     break
 
-                if (checkLimit == 0):
-                    limit = int(statsMaxValue[i] / statsToAssign[j])
-                    distribLimit[j][i] = np.random.randint(0, limit + 1)
-                    limitCache[j] = distribLimit[j][i] * statsToAssign[j]
+                if check_limit == 0:
+                    limit = int(stats_max_value[i] / stats_to_assign[j])
+                    distribute_limit[j][i] = np.random.randint(0, limit + 1)
+                    limit_cache[j] = distribute_limit[j][i] * stats_to_assign[j]
                 else:
-                    if ((len(statsToAssign) - j) == 1):
-                        distribLimit[j][i] = statsMaxValue[i] - checkLimit
-                        limitCache[j] = distribLimit[j][i] * statsToAssign[j]
+                    if (len(stats_to_assign) - j) == 1:
+                        distribute_limit[j][i] = stats_max_value[i] - check_limit
+                        limit_cache[j] = distribute_limit[j][i] * stats_to_assign[j]
                     else:
-                        limit = int((statsMaxValue[i] - checkLimit) / statsToAssign[j])
-                        distribLimit[j][i] = np.random.randint(0, limit + 1)
-                        limitCache[j] = distribLimit[j][i] * statsToAssign[j]
+                        limit = int((stats_max_value[i] - check_limit) / stats_to_assign[j])
+                        distribute_limit[j][i] = np.random.randint(0, limit + 1)
+                        limit_cache[j] = distribute_limit[j][i] * stats_to_assign[j]
 
         # Assign all stats data to container
-        for i in range(len(statsMaxValue)):
-            lastStats = 0
+        for i in range(len(stats_max_value)):
+            last_stats = 0
 
-            for j in range(len(statsToAssign)):
-                for k in range(int(distribLimit[j][i])):
-                    if (lastStats == 0):
-                        self.statsContainer[k][i] = statsToAssign[j]
+            for j in range(len(stats_to_assign)):
+                for k in range(int(distribute_limit[j][i])):
+                    if last_stats == 0:
+                        self.stats_container[k][i] = stats_to_assign[j]
                     else:
-                        self.statsContainer[lastStats + k][i] = statsToAssign[j]
+                        self.stats_container[last_stats + k][i] = stats_to_assign[j]
 
-                    if (distribLimit[j][i] - k == 1):
-                        lastStats = k + 1
+                    if distribute_limit[j][i] - k == 1:
+                        last_stats = k + 1
 
         # Shuffle the stats
-        for i in range(len(statsMaxValue)):
-            np.random.shuffle(self.statsContainer[:, i])
+        for i in range(len(stats_max_value)):
+            np.random.shuffle(self.stats_container[:, i])
 
-    def showRangeStats(self, graphTitle, title=None):
+    def show_range_stats(self, graph_title, title=None):
         print("[DEBUG] ~ STATS")
         print("List of characters stats: ")
-        print(self.statsContainer)
+        print(self.stats_container)
 
-        Vs.playerStatsGraph(self.statsContainer, self.rangeLevel, self.nameStats, graphTitle, title)
+        Vis.player_stats_graph(self.stats_container, self.range_level, self.name_stats, graph_title, title)
 
         print("\n\n")
 
-    "All Player Stats Container"
-
-    def setLvContnr(dataContainer, columnInfo, maxLevel, rangeLevel):
-        if (dataContainer[columnInfo[0]].shape[0] == maxLevel):
-            dataContainer[columnInfo[0]] = rangeLevel
-            return dataContainer
+    @staticmethod
+    def set_level_container(data_container, column_info, max_level, range_level):
+        if data_container[column_info[0]].shape[0] == max_level:
+            data_container[column_info[0]] = range_level
+            return data_container
         else:
             sys.exit("[ERROR] The levels not match with the rows of data container!")
 
-    def setHPContnr(dataContainer, columnInfo, maxLevel, rangeHP):
-        if (dataContainer[columnInfo[1]].shape[0] == maxLevel):
-            dataContainer[columnInfo[1]] = rangeHP
+    @staticmethod
+    def set_hp_container(data_container, column_info, max_level, range_hp):
+        if data_container[column_info[1]].shape[0] == max_level:
+            data_container[column_info[1]] = range_hp
 
-            return dataContainer
+            return data_container
         else:
             sys.exit("[ERROR] The HP's rows not match with the rows of data container!")
 
-    def setMPContnr(dataContainer, columnInfo, maxLevel, rangeMP):
-        if (dataContainer[columnInfo[2]].shape[0] == maxLevel):
-            dataContainer[columnInfo[2]] = rangeMP
-            return dataContainer
+    @staticmethod
+    def set_mp_container(data_container, column_info, max_level, range_mp):
+        if data_container[column_info[2]].shape[0] == max_level:
+            data_container[column_info[2]] = range_mp
+            return data_container
         else:
             sys.exit("[ERROR] The MP's rows not match with the rows of data container!")
 
-    def setElContnr(dataContainer, initColumn, columnInfo, maxLevel, elementContainer):
-        if (elementContainer.shape[0] == maxLevel):
+    @staticmethod
+    def set_element_container(data_container, init_column, column_info, max_level, element_container):
+        if element_container.shape[0] == max_level:
+
             # With MP (Usually Turn-based)
-            if (len(initColumn) == 3):
-                for i in range(elementContainer.shape[1]):
-                    dataContainer[columnInfo[3 + i]] = elementContainer[:, i]
+            if len(init_column) == 3:
+                for i in range(element_container.shape[1]):
+                    data_container[column_info[3 + i]] = element_container[:, i]
+
             # Without MP (Usually Action)
             else:
-                for i in range(elementContainer.shape[1]):
-                    dataContainer[columnInfo[2 + i]] = elementContainer[:, i]
+                for i in range(element_container.shape[1]):
+                    data_container[column_info[2 + i]] = element_container[:, i]
 
-            return dataContainer
+            return data_container
         else:
             sys.exit("[ERROR] The Element's rows not match with the rows of data container!")
 
-    def setStats(dataContainer, initColumn, columnInfo, maxLevel, statsContainer):
-        if (statsContainer.shape[0] == maxLevel):
+    @staticmethod
+    def set_stats(data_container, init_column, column_info, max_level, stats_container):
+        if stats_container.shape[0] == max_level:
             # Without Element (Usually Action)
-            if (len(initColumn) == 3):
-                lenElContnr = columnInfo.shape[0] - (len(initColumn) + statsContainer.shape[1])
+            if len(init_column) == 3:
+                len_element_container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
 
-                for i in range(statsContainer.shape[1]):
-                    dataContainer[columnInfo[len(initColumn) + lenElContnr + i]] = statsContainer[:, i]
+                for i in range(stats_container.shape[1]):
+                    data_container[column_info[len(init_column) + len_element_container + i]] = stats_container[:, i]
 
             # Without MP and Element (Usually Action)
-            elif (len(initColumn) == 2):
-                lenElContnr = columnInfo.shape[0] - (len(initColumn) + statsContainer.shape[1])
+            elif len(init_column) == 2:
+                len_element_container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
 
-                for i in range(statsContainer.shape[1]):
-                    dataContainer[columnInfo[len(initColumn) + lenElContnr + i]] = statsContainer[:, i]
+                for i in range(stats_container.shape[1]):
+                    data_container[column_info[len(init_column) + len_element_container + i]] = stats_container[:, i]
 
             # Others
             else:
-                for i in range(statsContainer.shape[1]):
-                    dataContainer[columnInfo.shape[2 + i]] = statsContainer[:, i]
+                for i in range(stats_container.shape[1]):
+                    data_container[column_info.shape[2 + i]] = stats_container[:, i]
 
-            return dataContainer
+            return data_container
         else:
             sys.exit("[ERROR] The Stats's rows not match with the rows of data container!")
 
-    def genStats(self):
-        rowLvl = np.arange((self.maxLevel - (self.maxLevel - self.startLevel)), self.maxLevel + 1)
-        initColumn = self.mainColumn
+    def gen_stats(self):
+        row_level = np.arange((self.max_level - (self.max_level - self.start_level)), self.max_level + 1)
+        init_column = self.main_column
 
-        if (self.rangeMP == []):
-            if (self.nameElement == []):
-                columnInfo = np.concatenate((initColumn, self.nameStats), axis=None)
-                self.dataContainer = pd.DataFrame(0, rowLvl, columnInfo)
-                self.dataContainer = Player.setLvContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeLevel)
-                self.dataContainer = Player.setHPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeHP)
-                self.dataContainer = Player.setStats(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                     self.statsContainer)
+        if self.range_mp.all:
+            if not self.name_element:
+                column_info = np.concatenate((init_column, self.name_stats), axis=None)
+                self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
+                self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
+                                                                 self.range_level)
+                self.data_container = Player.set_hp_container(self.data_container, column_info, self.max_level,
+                                                              self.range_hp)
+                self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
+                                                       self.stats_container)
             else:
-                columnInfo = np.concatenate((initColumn, self.nmElment, self.nameStats), axis=None)
-                self.dataContainer = pd.DataFrame(0, rowLvl, columnInfo)
-                self.dataContainer = Player.setLvContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeLevel)
-                self.dataContainer = Player.setHPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeHP)
-                self.dataContainer = Player.setElContnr(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                        self.elementContainer)
-                self.dataContainer = Player.setStats(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                     self.statsContainer)
-        elif (self.nameElement == []):
-            columnInfo = np.concatenate((initColumn, self.nameStats), axis=None)
-            self.dataContainer = pd.DataFrame(0, rowLvl, columnInfo)
-            self.dataContainer = Player.setLvContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeLevel)
-            self.dataContainer = Player.setHPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeHP)
-            self.dataContainer = Player.setMPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeMP)
-            self.dataContainer = Player.setStats(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                 self.statsContainer)
+                column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
+                self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
+                self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
+                                                                 self.range_level)
+                self.data_container = Player.set_hp_container(self.data_container, column_info, self.max_level,
+                                                              self.range_hp)
+                self.data_container = Player.set_element_container(self.data_container, init_column, column_info,
+                                                                   self.max_level, self.element_container)
+                self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
+                                                       self.stats_container)
+        elif not self.name_element:
+            column_info = np.concatenate((init_column, self.name_stats), axis=None)
+            self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
+            self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
+                                                             self.range_level)
+            self.data_container = Player.set_hp_container(self.data_container, column_info,
+                                                          self.max_level, self.range_hp)
+            self.data_container = Player.set_mp_container(self.data_container, column_info,
+                                                          self.max_level, self.range_mp)
+            self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
+                                                   self.stats_container)
         else:
-            columnInfo = np.concatenate((initColumn, self.nameElement, self.nameStats), axis=None)
-            self.dataContainer = pd.DataFrame(0, rowLvl, columnInfo)
-            self.dataContainer = Player.setLvContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeLevel)
-            self.dataContainer = Player.setHPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeHP)
-            self.dataContainer = Player.setMPContnr(self.dataContainer, columnInfo, self.maxLevel, self.rangeMP)
-            self.dataContainer = Player.setElContnr(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                    self.elementContainer)
-            self.dataContainer = Player.setStats(self.dataContainer, initColumn, columnInfo, self.maxLevel,
-                                                 self.statsContainer)
+            column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
+            self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
+            self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
+                                                             self.range_level)
+            self.data_container = Player.set_hp_container(self.data_container, column_info,
+                                                          self.max_level, self.range_hp)
+            self.data_container = Player.set_mp_container(self.data_container, column_info,
+                                                          self.max_level, self.range_mp)
+            self.data_container = Player.set_element_container(self.data_container, init_column, column_info,
+                                                               self.max_level, self.element_container)
+            self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
+                                                   self.stats_container)
 
         pd.set_option('display.max_rows', 200)
 
         print("[RESULT] All Player Character Stats: \n")
-        print(self.dataContainer)
+        print(self.data_container)
 
-        print("\n[DEBUG] Current TOTAL STATS: ", self.statsContainer.sum(axis=0), "\n")
+        print("\n[DEBUG] Current TOTAL STATS: ", self.stats_container.sum(axis=0), "\n")
 
-        self.dataContainer.to_csv('csv_output_result/PlayerStats.csv', index=True)
+        self.data_container.to_csv('csv_output_result/PlayerStats.csv', index=True)

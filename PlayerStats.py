@@ -25,24 +25,24 @@ def protagonist_char():
     # [RANGE CHARACTERS LEVELS]
     start_level = 1
 
-    protagonist.rangeLevels(start_level, 'Levels')
-    protagonist.showRangeLevels()
+    protagonist.range_levels(start_level, 'Levels')
+    protagonist.show_range_levels()
 
     # [RANGE CHARACTERS HP]
     start_hp = 159
     next_hp = 163
     graph_title = "Player HP Distribution"
 
-    protagonist.rangeHealtPoints(start_hp, next_hp, 'HP')
-    protagonist.showRangeHealtPoints(graph_title, title=False)
+    protagonist.range_health_points(start_hp, next_hp, 'HP')
+    protagonist.show_range_health_points(graph_title, title=False)
 
     # [RANGE CHARACTERS MP]
     start_mp = 89
     next_mp = 93
     graph_title = "Player MP Distribution"
 
-    protagonist.rangeMagicPoints(start_mp, next_mp, 'MP')
-    protagonist.showRangeMagicPoints(graph_title, title=False)
+    protagonist.range_magic_points(start_mp, next_mp, 'MP')
+    protagonist.show_range_magic_points(graph_title, title=False)
 
     # [RANGE CHARACTERS WEAKNESSES]
     # CHARACTER ELEMENT DAMAGE IMPACT.
@@ -54,8 +54,8 @@ def protagonist_char():
     elements_name = ['Phys', 'Water', 'Wind', 'Earth', 'Fire']
     char_weak_number = [0, 2, 0, 0, 1]
 
-    protagonist.rangeElementWeak(elements_name, char_weak_number)
-    protagonist.showElmntWeak()
+    protagonist.range_element_weak(elements_name, char_weak_number)
+    protagonist.show_element_weak()
 
     # [RANGE CHARACTERS STATS]
     name_stats = ['Strength', 'Magic', 'Endurance', 'Speed', 'Luck']
@@ -63,11 +63,11 @@ def protagonist_char():
     stats_to_assign = [2, 1]
     graph_title = "Player Stats Distribution"
 
-    protagonist.rangeStats(name_stats, stats_max_value, stats_to_assign)
-    protagonist.showRangeStats(graph_title, title=False)
+    protagonist.range_stats(name_stats, stats_max_value, stats_to_assign)
+    protagonist.show_range_stats(graph_title, title=False)
 
     # Parse All Data to The Tables
-    protagonist.genStats()
+    protagonist.gen_stats()
 
 
 if __name__ == "__main__":
