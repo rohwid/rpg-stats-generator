@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from scipy.stats import norm
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -18,7 +18,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or
   check the values.
-'''
+"""
 
 import Model as Md
 
@@ -297,7 +297,5 @@ def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_col
         axes.set_title("Enemies " + stats_name + " Stats Distribution", fontsize=20, fontweight='bold')
 
     saveStatsName = "graph_output_result/Enemy" + stats_name + "Distribute"
-
     fig.savefig(saveStatsName)
-
     plt.show()

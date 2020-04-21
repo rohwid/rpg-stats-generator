@@ -1,6 +1,6 @@
 from EnemyDataContainer import Enemy
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -14,7 +14,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or
   check the values.
-'''
+"""
 
 
 def all_enemies():
@@ -23,15 +23,16 @@ def all_enemies():
     max_level = 80
     enemies = Enemy(numbers_enemy, max_level)
 
-    # [RANGE ENEMIES NAME]
-    # Set the "enemy_name" variable to string to automatically generate names
-    # Example:
-    #   enemy_name = "Enemy"
-    #
-    # Set the "enemy_name" variable to list or array to manually generate name
-    # Example:
-    #   enemy_name = ["alpha", "beta", "charlie", "delta"]
-
+    """
+    [RANGE ENEMIES NAME]
+    Set the "enemy_name" variable to string to automatically generate names
+    Example:
+       enemy_name = "Enemy"
+    
+    Set the "enemy_name" variable to list or array to manually generate name
+    Example:
+      enemy_name = ["alpha", "beta", "charlie", "delta"]
+    """
     enemy_name = "Enemy"
     enemies.range_enemy_name(enemy_name, "Name", auto="yes")
 
@@ -66,12 +67,13 @@ def all_enemies():
     enemies.range_enemy_type(enemy_type, distribute_percent, 'Type')
     enemies.show_range_enemy_type(graph_title, title=False)
 
-    # [RANGE ENEMIES WEAKNESSES]
-    # CHARACTER ELEMENT DAMAGE IMPACT.
-    # 0: Normal damage.
-    # 1: Repel against (no damage).
-    # 2: The damage weaknesses.
-
+    """
+    [RANGE ENEMIES WEAKNESSES]
+    CHARACTER ELEMENT DAMAGE IMPACT.
+    0: Normal damage.
+    1: Repel against (no damage).
+    2: The damage weaknesses.
+    """
     element_name = ['Phys', 'Water', 'Wind', 'Earth', 'Fire']
     damage_name = ['Normal', 'Repel', 'Weak']
     graph_title = "Enemy Element Distribution"

@@ -3,7 +3,7 @@ import math
 import numpy as np
 import pandas as pd
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -17,7 +17,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or check the values.
 - Every common function set to be more flexible and ready to be "override".
-'''
+"""
 
 import Model as Mod
 import Visualization as Vis
@@ -170,10 +170,12 @@ class Enemy:
         Vis.enemy_level_graph(self.range_level, graph_title, title)
         Vis.enemy_level_normal_distribution(self.range_level, graph_title, title)
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMY TYPE WAS DISTRIBUTE HERE!
-    # This section was created for users to define the type distribution.
-    # You must override it, if you want different enemy types
-    # distribution method.
+    """
+    NOTE: THE EXPLANATION ABOUT THE ENEMY TYPE WAS DISTRIBUTE HERE!
+    This section was created for users to define the type distribution.
+    You must override it, if you want different enemy types
+    distribution method.
+    """
     def range_enemy_type(self, enemy_type, distribute_percent, column_name):
         self.main_column = Enemy.set_column_main(4, column_name, self.main_column)
         self.enemy_type_name = enemy_type
@@ -679,6 +681,7 @@ class Enemy:
         if self.range_mp.all:
             if not self.element_name:
                 column_info = np.concatenate((init_column, self.stats_name), axis=None)
+
                 self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
                 self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
                                                                self.enemy_name)
@@ -692,6 +695,7 @@ class Enemy:
                                                       self.enemy_number, self.stats_container)
             else:
                 column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
+
                 self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
                 self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
                                                                self.enemy_name)
@@ -707,6 +711,7 @@ class Enemy:
                                                       self.enemy_number, self.stats_container)
         elif not self.element_name:
             column_info = np.concatenate((init_column, self.stats_name), axis=None)
+
             self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
             self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
                                                            self.enemy_name)
@@ -722,6 +727,7 @@ class Enemy:
                                                   self.enemy_number, self.stats_container)
         else:
             column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
+
             self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
             self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
                                                            self.enemy_name)

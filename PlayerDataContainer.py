@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -16,7 +16,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or check the values.
 - Every common function set to be more flexible and ready to be "override".
-'''
+"""
 
 import Visualization as Vis
 
@@ -259,22 +259,24 @@ class Player:
         else:
             sys.exit("[ERROR] The Stats's rows not match with the rows of data container!")
 
-    def gen_stats(self):
+    def generate_stats(self):
         row_level = np.arange((self.max_level - (self.max_level - self.start_level)), self.max_level + 1)
         init_column = self.main_column
 
         if self.range_mp.all:
             if self.name_element:
                 column_info = np.concatenate((init_column, self.name_stats), axis=None)
+
                 self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
                 self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
                                                                  self.range_level)
                 self.data_container = Player.set_hp_container(self.data_container, column_info, self.max_level,
                                                               self.range_hp)
-                self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
-                                                       self.stats_container)
+                self.data_container = Player.set_stats(self.data_container, init_column, column_info,
+                                                       self.max_level, self.stats_container)
             else:
                 column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
+
                 self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
                 self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
                                                                  self.range_level)
@@ -282,32 +284,34 @@ class Player:
                                                               self.range_hp)
                 self.data_container = Player.set_element_container(self.data_container, init_column, column_info,
                                                                    self.max_level, self.element_container)
-                self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
-                                                       self.stats_container)
+                self.data_container = Player.set_stats(self.data_container, init_column, column_info,
+                                                       self.max_level, self.stats_container)
         elif not self.name_element:
             column_info = np.concatenate((init_column, self.name_stats), axis=None)
+
             self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
             self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
                                                              self.range_level)
-            self.data_container = Player.set_hp_container(self.data_container, column_info,
-                                                          self.max_level, self.range_hp)
-            self.data_container = Player.set_mp_container(self.data_container, column_info,
-                                                          self.max_level, self.range_mp)
-            self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
-                                                   self.stats_container)
+            self.data_container = Player.set_hp_container(self.data_container, column_info, self.max_level,
+                                                          self.range_hp)
+            self.data_container = Player.set_mp_container(self.data_container, column_info, self.max_level,
+                                                          self.range_mp)
+            self.data_container = Player.set_stats(self.data_container, init_column, column_info,
+                                                   self.max_level, self.stats_container)
         else:
             column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
+
             self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
             self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,
                                                              self.range_level)
-            self.data_container = Player.set_hp_container(self.data_container, column_info,
-                                                          self.max_level, self.range_hp)
-            self.data_container = Player.set_mp_container(self.data_container, column_info,
-                                                          self.max_level, self.range_mp)
+            self.data_container = Player.set_hp_container(self.data_container, column_info, self.max_level,
+                                                          self.range_hp)
+            self.data_container = Player.set_mp_container(self.data_container, column_info, self.max_level,
+                                                          self.range_mp)
             self.data_container = Player.set_element_container(self.data_container, init_column, column_info,
                                                                self.max_level, self.element_container)
-            self.data_container = Player.set_stats(self.data_container, init_column, column_info, self.max_level,
-                                                   self.stats_container)
+            self.data_container = Player.set_stats(self.data_container, init_column, column_info,
+                                                   self.max_level, self.stats_container)
 
         pd.set_option('display.max_rows', 200)
 

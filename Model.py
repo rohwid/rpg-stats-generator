@@ -1,7 +1,7 @@
 import math
 import numpy as np
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -15,7 +15,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or
   check the values.
-'''
+"""
 
 
 def round_number(number):

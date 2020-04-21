@@ -1,6 +1,6 @@
 from PlayerDataContainer import Player
 
-'''
+"""
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
 By: ROHMAN WIDIYANTO
 GitHub: http://github.com/rohwid/
@@ -14,7 +14,7 @@ All component or object defined separately, here's the reason:
 Notes:
 - Anything which contain "show" in the function was used for debug or
   check the values.
-'''
+"""
 
 
 def protagonist_char():
@@ -44,13 +44,14 @@ def protagonist_char():
     protagonist.range_magic_points(start_mp, next_mp, 'MP')
     protagonist.show_range_magic_points(graph_title, title=False)
 
-    # [RANGE CHARACTERS WEAKNESSES]
-    # CHARACTER ELEMENT DAMAGE IMPACT.
-    # 0: Normal damage.
-    # 1: Repel against (no damage).
-    # 2: The damage weaknesses.
-    # Override this function when have different weaknesses concept!
-
+    """
+    [RANGE CHARACTERS WEAKNESSES]
+    CHARACTER ELEMENT DAMAGE IMPACT.
+    0: Normal damage.
+    1: Repel against (no damage).
+    2: The damage weaknesses.
+    Override this function when have different weaknesses concept!
+    """
     elements_name = ['Phys', 'Water', 'Wind', 'Earth', 'Fire']
     char_weak_number = [0, 2, 0, 0, 1]
 
@@ -67,7 +68,7 @@ def protagonist_char():
     protagonist.show_range_stats(graph_title, title=False)
 
     # Parse All Data to The Tables
-    protagonist.gen_stats()
+    protagonist.generate_stats()
 
 
 if __name__ == "__main__":
