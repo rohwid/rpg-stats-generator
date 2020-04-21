@@ -1,5 +1,4 @@
 import sys
-
 import numpy as np
 import pandas as pd
 
@@ -29,7 +28,7 @@ class Player:
         self.range_level = np.array([])
         self.range_hp = np.array([])
         self.range_mp = np.array([])
-        self.name_element = np.array([])
+        self.name_element = []
         self.element_container = np.array([])
         self.name_stats = np.array([])
         self.stats_container = np.array([])
@@ -265,7 +264,7 @@ class Player:
         init_column = self.main_column
 
         if self.range_mp.all:
-            if not self.name_element:
+            if self.name_element:
                 column_info = np.concatenate((init_column, self.name_stats), axis=None)
                 self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
                 self.data_container = Player.set_level_container(self.data_container, column_info, self.max_level,

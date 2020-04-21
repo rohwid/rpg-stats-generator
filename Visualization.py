@@ -227,9 +227,8 @@ def enemy_hp_graph(level, enemy_name, hp, title):
     if title is not None and title:
         axes.set_title("Enemies HP Stats Distribution", fontsize=20, fontweight='bold')
 
-    plt.show()
-
     fig.savefig('graph_output_result/EnemyHpDistribution.png')
+    plt.show()
 
 
 def enemy_mp_graph(level, enemy_name, mp, title):
@@ -246,8 +245,8 @@ def enemy_mp_graph(level, enemy_name, mp, title):
     if title is not None and title:
         axes.set_title("Enemies MP Stats Distribution", fontsize=20, fontweight='bold')
 
-    plt.show()
     fig.savefig('graph_output_result/EnemyMpDistribution.png')
+    plt.show()
 
 
 def enemy_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, title):
@@ -279,9 +278,9 @@ def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_t
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
     axes.legend()
-    plt.show()
 
     fig.savefig('graph_output_result/EnemyStatsDistribute.png')
+    plt.show()
 
 
 def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_color, title):
@@ -297,8 +296,8 @@ def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_col
     if title is not None and title:
         axes.set_title("Enemies " + stats_name + " Stats Distribution", fontsize=20, fontweight='bold')
 
-    plt.show()
-
     saveStatsName = "graph_output_result/Enemy" + stats_name + "Distribute"
 
     fig.savefig(saveStatsName)
+
+    plt.show()

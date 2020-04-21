@@ -27,28 +27,27 @@ class Enemy:
     def __init__(self, enemy_number, max_level):
         self.max_level = max_level
         self.levels_number = 0
-        self.range_level = []
+        self.range_level = np.array([])
         self.enemy_number = enemy_number
         self.enemy_name = []
         self.enemy_type_name = []
-        self.enemy_types = []
+        self.enemy_types = np.array([])
         self.min_hp = 0
         self.min_mp = 0
         self.max_hp = 0
         self.max_mp = 0
-        self.range_hp = []
-        self.range_mp = []
+        self.range_hp = np.array([])
+        self.range_mp = np.array([])
         self.damage_name = []
         self.element_name = []
-        self.element_container = []
+        self.element_container = np.array([])
         self.stats_name = []
-        self.stats_container = []
+        self.stats_container = np.array([])
         self.main_column = []
         self.data_container = []
 
     @staticmethod
     def set_column_main(pref, column_name, column_info):
-
         # Name
         if pref == 0:
             if not column_info:
@@ -89,15 +88,17 @@ class Enemy:
 
         return column_info
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMIES NAME WAS DISTRIBUTE HERE!
-    # This section was created for users to define the name distribution.
-    # You must override it, if you want different enemies types
-    # distribution method.
+    """
+    NOTE: THE EXPLANATION ABOUT THE ENEMY NAME WAS DISTRIBUTE HERE!
+    This section was created for users to define the name distribution.
+    You must override it, if you want different enemy types
+    distribution method.
+    """
     @staticmethod
-    def generate_name(en_name, enemies_number):
-        name_enemy_container = [None] * enemies_number
+    def generate_name(en_name, enemy_number):
+        name_enemy_container = [None] * enemy_number
 
-        for i in range(enemies_number):
+        for i in range(enemy_number):
             name_enemy_container[i] = (en_name + str(i + 1))
 
         return name_enemy_container
@@ -108,14 +109,16 @@ class Enemy:
         elif auto == "no" or auto == "YES" or auto == "Yes":
             self.enemy_name = enemy_name
         else:
-            sys.exit("[ERROR] Wrong \"auto\" value, can assign name to the enemies!")
+            sys.exit("[ERROR] Wrong \"auto\" value, can assign name to the enemy!")
 
         self.main_column = Enemy.set_column_main(0, column_name, self.main_column)
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMIES LEVELS WAS DISTRIBUTE HERE!
-    # This section was created for users to define the levels distribution.
-    # You must override it, if you want different enemies levels
-    # distribution method.
+    """
+    NOTE: THE EXPLANATION ABOUT THE ENEMY LEVELS WAS DISTRIBUTE HERE!
+    This section was created for users to define the levels distribution.
+    You must override it, if you want different enemy levels
+    distribution method.
+    """
     def range_levels(self, min_level, levels_class, column_name, scale=0):
         self.levels_number = (self.max_level - min_level) + 1
 
@@ -125,9 +128,9 @@ class Enemy:
         print("[DEBUG] ~ LEVELS")
         print("[DEBUG] Range LEVEL Distribution:         ", part_levels)
 
-        # Split enemies numbers by class levels
-        part_enemies = Mod.split_range(self.enemy_number, levels_class, density=False)
-        print("[DEBUG] Range ENEMIES Distribution:       ", part_enemies)
+        # Split enemy numbers by class levels
+        part_enemy = Mod.split_range(self.enemy_number, levels_class, density=False)
+        print("[DEBUG] Range ENEMY Distribution:       ", part_enemy)
 
         self.range_level = np.zeros(self.enemy_number)
 
@@ -136,13 +139,13 @@ class Enemy:
 
         for i in range(len(part_levels)):
             sub_part_levels = Mod.split_range(part_levels[i], scale, density=True)
-            sub_part_enemies = Mod.split_range(part_enemies[i], scale, density=True)
+            sub_part_enemy = Mod.split_range(part_enemy[i], scale, density=True)
 
             print("[DEBUG] Range Sub-LEVEL Distribution:     ", sub_part_levels)
-            print("[DEBUG] Range Sub-ENEMIES Distribution:   ", sub_part_enemies)
+            print("[DEBUG] Range Sub-ENEMY Distribution:   ", sub_part_enemy)
 
-            for j in range(len(sub_part_enemies)):
-                for k in range(int(sub_part_enemies[j])):
+            for j in range(len(sub_part_enemy)):
+                for k in range(int(sub_part_enemy[j])):
                     print("[DEBUG] Current Levels:           ", count_level)
                     print("[DEBUG] Current sub_part_levels:  ", sub_part_levels[j])
 
@@ -167,9 +170,9 @@ class Enemy:
         Vis.enemy_level_graph(self.range_level, graph_title, title)
         Vis.enemy_level_normal_distribution(self.range_level, graph_title, title)
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMIES TYPE WAS DISTRIBUTE HERE!
+    # NOTE: THE EXPLANATION ABOUT THE ENEMY TYPE WAS DISTRIBUTE HERE!
     # This section was created for users to define the type distribution.
-    # You must override it, if you want different enemies types
+    # You must override it, if you want different enemy types
     # distribution method.
     def range_enemy_type(self, enemy_type, distribute_percent, column_name):
         self.main_column = Enemy.set_column_main(4, column_name, self.main_column)
@@ -208,9 +211,9 @@ class Enemy:
                 enemy_distribute[j] = enemy_distribute[j] + temp_enemy_distribute
 
         print("[DEBUG] ~ TYPES")
-        print("[DEBUG] ENEMIES to distribute: ", enemy_distribute)
+        print("[DEBUG] ENEMY to distribute: ", enemy_distribute)
         print("[DEBUG] Enemy NUMBERS distribution map (divide to 5 section): ", distribute_number)
-        print("[DEBUG] Total Distributed ENEMIES: ", total_distribute_enemy)
+        print("[DEBUG] Total Distributed ENEMY: ", total_distribute_enemy)
         print("\n")
 
         print("[DEBUG] Enemy LEVELS distribution map (divide to 5 section): ", distribute_level)
@@ -258,7 +261,7 @@ class Enemy:
                     self.enemy_types[i] = j
                     break
 
-        print("[DEBUG] Range Enemies Type: ")
+        print("[DEBUG] Range Enemy Type: ")
         print(self.enemy_types)
         print("\n")
 
@@ -278,8 +281,8 @@ class Enemy:
                         restEnemyIndex = restEnemyIndex + 1
 
     def show_range_enemy_type(self, graph_title, title):
-        print("[DEBUG] Range Enemies Type Dimension: ", self.enemy_types.shape)
-        print("[DEBUG] Range Enemies Type: ")
+        print("[DEBUG] Range Enemy Type Dimension: ", self.enemy_types.shape)
+        print("[DEBUG] Range Enemy Type: ")
         print(self.enemy_types)
 
         Vis.enemy_type_graph(self.enemy_type_name, self.enemy_types, graph_title, title)
@@ -295,10 +298,12 @@ class Enemy:
         self.min_mp = min_mp
         self.max_mp = max_mp
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMIES WEAKNESSES WAS DISTRIBUTE HERE!
-    # This section was created for users to define the weaknesses distribution.
-    # You must override it, if you want different enemies weaknesses
-    # distribution method.
+    """
+    NOTE: THE EXPLANATION ABOUT THE ENEMY WEAKNESSES WAS DISTRIBUTE HERE!
+    This section was created for users to define the weaknesses distribution.
+    You must override it, if you want different enemy weaknesses
+    distribution method.
+    """
     def range_element_weak(self, element_name, damage_name):
         self.element_name = element_name
         self.damage_name = damage_name
@@ -353,9 +358,11 @@ class Enemy:
             Vis.enemy_weak_graph(self.element_name, self.damage_name, self.element_container, graph_title, title)
             print('\n\n')
 
-    # NOTE: THE EXPLANATION ABOUT THE ENEMIES STATS WAS DISTRIBUTE HERE!
-    # This section was created for users to define the stats distribution.
-    # You must override it, if you want different stats distribution method.
+    """
+    NOTE: THE EXPLANATION ABOUT THE ENEMY STATS WAS DISTRIBUTE HERE!
+    This section was created for users to define the stats distribution.
+    You must override it, if you want different stats distribution method.
+    """
     def range_stats(self, stats_name, basic_min_stats, basic_max_stats):
         self.stats_name = stats_name
         self.range_hp = np.zeros(len(self.enemy_types))
@@ -570,8 +577,8 @@ class Enemy:
 
     def show_range_stats(self, graph_title, title):
         print("[DEBUG] ~ STATS")
-        print("[DEBUG] Range Enemies Stats Dimension: ", self.stats_container.shape)
-        print("[DEBUG] Range Enemies Stats: ")
+        print("[DEBUG] Range Enemy Stats Dimension: ", self.stats_container.shape)
+        print("[DEBUG] Range Enemy Stats: ")
         print(self.stats_container)
 
         Vis.enemy_hp_graph(self.range_level, self.enemy_name, self.range_hp, title)
@@ -581,48 +588,48 @@ class Enemy:
         print('\n\n')
 
     @staticmethod
-    def set_nam_container(data_container, column_info, enemies_number, enemies_name):
-        if data_container[column_info[0]].shape[0] == enemies_number:
-            data_container[column_info[0]] = enemies_name
+    def set_name_container(data_container, column_info, enemy_number, enemy_name):
+        if data_container[column_info[0]].shape[0] == enemy_number:
+            data_container[column_info[0]] = enemy_name
             return data_container
         else:
             sys.exit("[ERROR] The list of names not match with the rows of data container!")
 
     @staticmethod
-    def set_level_container(data_container, column_info, enemies_number, range_level):
-        if data_container[column_info[1]].shape[0] == enemies_number:
+    def set_level_container(data_container, column_info, enemy_number, range_level):
+        if data_container[column_info[1]].shape[0] == enemy_number:
             data_container[column_info[1]] = range_level
             return data_container
         else:
             sys.exit("[ERROR] The levels not match with the rows of data container!")
 
     @staticmethod
-    def set_hp_container(data_container, column_info, enemies_number, range_hp):
-        if data_container[column_info[2]].shape[0] == enemies_number:
+    def set_hp_container(data_container, column_info, enemy_number, range_hp):
+        if data_container[column_info[2]].shape[0] == enemy_number:
             data_container[column_info[2]] = range_hp
             return data_container
         else:
             sys.exit("[ERROR] The HP's rows not match with the rows of data container!")
 
     @staticmethod
-    def set_mp_container(data_container, column_info, enemies_number, range_mp):
-        if data_container[column_info[3]].shape[0] == enemies_number:
+    def set_mp_container(data_container, column_info, enemy_number, range_mp):
+        if data_container[column_info[3]].shape[0] == enemy_number:
             data_container[column_info[3]] = range_mp
             return data_container
         else:
             sys.exit("[ERROR] The MP's rows not match with the rows of data container!")
 
     @staticmethod
-    def set_type_container(data_container, column_info, enemies_number, range_types):
-        if data_container[column_info[4]].shape[0] == enemies_number:
+    def set_type_container(data_container, column_info, enemy_number, range_types):
+        if data_container[column_info[4]].shape[0] == enemy_number:
             data_container[column_info[4]] = range_types
             return data_container
         else:
             sys.exit("[ERROR] The MP's rows not match with the rows of data container!")
 
     @staticmethod
-    def set_element_container(data_container, init_column, column_info, enemies_number, element_container):
-        if element_container.shape[0] == enemies_number:
+    def set_element_container(data_container, init_column, column_info, enemy_number, element_container):
+        if element_container.shape[0] == enemy_number:
 
             # With MP (Usually Turn-based)
             if len(init_column) == 6:
@@ -669,25 +676,25 @@ class Enemy:
         row_number = np.arange((self.enemy_number - (self.enemy_number - 1)), self.enemy_number + 1)
         init_column = self.main_column
 
-        if not self.range_mp:
+        if self.range_mp.all:
             if not self.element_name:
                 column_info = np.concatenate((init_column, self.stats_name), axis=None)
-                self.data_container = pd.DataFrame(0, row_number, column_info)
-                self.data_container = Enemy.set_nam_container(self.data_container, column_info, self.enemy_number,
-                                                              self.enemy_name)
+                self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
+                self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
+                                                               self.enemy_name)
                 self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
                                                                 self.range_level)
                 self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
                                                              self.range_hp)
                 self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
                                                                self.enemy_types)
-                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info, self.enemy_number,
-                                                      self.stats_container)
+                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
+                                                      self.enemy_number, self.stats_container)
             else:
                 column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
-                self.data_container = pd.DataFrame(0, row_number, column_info)
-                self.data_container = Enemy.set_nam_container(self.data_container, column_info, self.enemy_number,
-                                                              self.enemy_name)
+                self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
+                self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
+                                                               self.enemy_name)
                 self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
                                                                 self.range_level)
                 self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
@@ -695,14 +702,14 @@ class Enemy:
                 self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
                                                                self.enemy_types)
                 self.data_container = Enemy.set_element_container(self.data_container, init_column, column_info,
-                                                                  self.element_container, self.element_container)
-                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info, self.enemy_number,
-                                                      self.stats_container)
+                                                                  self.enemy_number, self.element_container)
+                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
+                                                      self.enemy_number, self.stats_container)
         elif not self.element_name:
             column_info = np.concatenate((init_column, self.stats_name), axis=None)
-            self.data_container = pd.DataFrame(0, row_number, column_info)
-            self.data_container = Enemy.set_nam_container(self.data_container, column_info, self.enemy_number,
-                                                          self.enemy_name)
+            self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
+            self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
+                                                           self.enemy_name)
             self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
                                                             self.range_level)
             self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
@@ -711,13 +718,13 @@ class Enemy:
                                                          self.range_mp)
             self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
                                                            self.enemy_types)
-            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info, self.enemy_number,
-                                                  self.stats_container)
+            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
+                                                  self.enemy_number, self.stats_container)
         else:
             column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
-            self.data_container = pd.DataFrame(0, row_number, column_info)
-            self.data_container = Enemy.set_nam_container(self.data_container, column_info, self.enemy_number,
-                                                          self.enemy_name)
+            self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
+            self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
+                                                           self.enemy_name)
             self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
                                                             self.range_level)
             self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
@@ -728,12 +735,12 @@ class Enemy:
                                                            self.enemy_types)
             self.data_container = Enemy.set_element_container(self.data_container, init_column, column_info,
                                                               self.enemy_number, self.element_container)
-            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info, self.enemy_number,
-                                                  self.stats_container)
+            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
+                                                  self.enemy_number, self.stats_container)
 
         pd.set_option('display.max_rows', 400)
 
-        print("[RESULT] All Enemies Stats: \n")
+        print("[RESULT] All Enemy Stats: \n")
         print(self.data_container)
         print('\n')
 
