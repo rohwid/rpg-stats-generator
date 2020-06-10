@@ -29,16 +29,16 @@ def protagonist_char():
     protagonist.show_range_levels()
 
     # [RANGE CHARACTERS HP]
-    start_hp = 159
-    next_hp = 163
+    start_hp = 224
+    next_hp = 228
     graph_title = "Player HP Distribution"
 
     protagonist.range_health_points(start_hp, next_hp, 'HP')
     protagonist.show_range_health_points(graph_title, title=False)
 
     # [RANGE CHARACTERS MP]
-    start_mp = 89
-    next_mp = 93
+    start_mp = 100
+    next_mp = 102
     graph_title = "Player MP Distribution"
 
     protagonist.range_magic_points(start_mp, next_mp, 'MP')
@@ -53,14 +53,14 @@ def protagonist_char():
     Override this function when have different weaknesses concept!
     """
     elements_name = ['Phys', 'Water', 'Wind', 'Earth', 'Fire']
-    char_weak_number = [0, 2, 0, 0, 1]
+    char_weak_number = [0, 0, 2, 1, 2]
 
     protagonist.range_element_weak(elements_name, char_weak_number)
     protagonist.show_element_weak()
 
     # [RANGE CHARACTERS STATS]
     name_stats = ['Strength', 'Magic', 'Endurance', 'Speed', 'Luck']
-    stats_max_value = [74, 38, 63, 65, 60]
+    stats_max_value = [88, 32, 81, 43, 56]
     stats_to_assign = [2, 1]
     graph_title = "Player Stats Distribution"
 
