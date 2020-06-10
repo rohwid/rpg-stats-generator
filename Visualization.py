@@ -20,7 +20,7 @@ Notes:
   check the values.
 """
 
-import Model as Md
+from Model import var_val, mean_values
 
 colorDB = ["#E74C3C", "#8E44AD", "#3498DB", "#27AE60", "#F39C12", "#707B7C", "#2C3E50"]
 
@@ -135,8 +135,8 @@ def enemy_level_graph(range_level, graph_title, title):
 def enemy_level_normal_distribution(range_level, graph_title, title):
     init_plt()
 
-    mean = Md.mean_values(range_level)
-    variance = Md.var_val(range_level, mean)
+    mean = mean_values(range_level)
+    variance = var_val(range_level, mean)
     sigma = math.sqrt(variance)
 
     x = np.linspace(mean - 3 * sigma, mean + 3 * sigma, len(range_level))

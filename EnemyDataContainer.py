@@ -19,8 +19,9 @@ Notes:
 - Every common function set to be more flexible and ready to be "override".
 """
 
-import Model as Mod
-import Visualization as Vis
+from Model import round_number, split_range
+from Visualization import enemy_level_normal_distribution, enemy_stats_graph, enemy_type_graph
+from Visualization import enemy_level_graph, enemy_hp_graph, enemy_weak_graph, enemy_mp_graph
 
 
 class Enemy:
@@ -94,6 +95,7 @@ class Enemy:
     You must override it, if you want different enemy types
     distribution method.
     """
+
     @staticmethod
     def generate_name(en_name, enemy_number):
         name_enemy_container = [None] * enemy_number
@@ -119,17 +121,18 @@ class Enemy:
     You must override it, if you want different enemy levels
     distribution method.
     """
+
     def range_levels(self, min_level, levels_class, column_name, scale=0):
         self.levels_number = (self.max_level - min_level) + 1
 
         # Split levels by levels of class levels
-        part_levels = Mod.split_range(self.levels_number, levels_class, density=False)
+        part_levels = split_range(self.levels_number, levels_class, density=False)
 
         print("[DEBUG] ~ LEVELS")
         print("[DEBUG] Range LEVEL Distribution:         ", part_levels)
 
         # Split enemy numbers by class levels
-        part_enemy = Mod.split_range(self.enemy_number, levels_class, density=False)
+        part_enemy = split_range(self.enemy_number, levels_class, density=False)
         print("[DEBUG] Range ENEMY Distribution:       ", part_enemy)
 
         self.range_level = np.zeros(self.enemy_number)
@@ -138,8 +141,8 @@ class Enemy:
         count_enemy = 0
 
         for i in range(len(part_levels)):
-            sub_part_levels = Mod.split_range(part_levels[i], scale, density=True)
-            sub_part_enemy = Mod.split_range(part_enemy[i], scale, density=True)
+            sub_part_levels = split_range(part_levels[i], scale, density=True)
+            sub_part_enemy = split_range(part_enemy[i], scale, density=True)
 
             print("[DEBUG] Range Sub-LEVEL Distribution:     ", sub_part_levels)
             print("[DEBUG] Range Sub-ENEMY Distribution:   ", sub_part_enemy)
@@ -167,8 +170,8 @@ class Enemy:
         print(self.range_level)
         print('\n\n')
 
-        Vis.enemy_level_graph(self.range_level, graph_title, title)
-        Vis.enemy_level_normal_distribution(self.range_level, graph_title, title)
+        enemy_level_graph(self.range_level, graph_title, title)
+        enemy_level_normal_distribution(self.range_level, graph_title, title)
 
     """
     NOTE: THE EXPLANATION ABOUT THE ENEMY TYPE WAS DISTRIBUTE HERE!
@@ -176,6 +179,7 @@ class Enemy:
     You must override it, if you want different enemy types
     distribution method.
     """
+
     def range_enemy_type(self, enemy_type, distribute_percent, column_name):
         self.main_column = Enemy.set_column_main(4, column_name, self.main_column)
         self.enemy_type_name = enemy_type
@@ -188,7 +192,7 @@ class Enemy:
 
         # Get actual range value from percentage
         for i in range(len(enemy_type)):
-            distribute_number[i] = Mod.round_number((distribute_percent[i] * len(self.range_level)) / 100)
+            distribute_number[i] = round_number((distribute_percent[i] * len(self.range_level)) / 100)
 
         # Map or distribute the enemy type
         distribute_level = np.zeros(len(enemy_type))
@@ -287,7 +291,7 @@ class Enemy:
         print("[DEBUG] Range Enemy Type: ")
         print(self.enemy_types)
 
-        Vis.enemy_type_graph(self.enemy_type_name, self.enemy_types, graph_title, title)
+        enemy_type_graph(self.enemy_type_name, self.enemy_types, graph_title, title)
         print('\n\n')
 
     def range_health_points(self, min_hp, max_hp, column_name):
@@ -306,6 +310,7 @@ class Enemy:
     You must override it, if you want different enemy weaknesses
     distribution method.
     """
+
     def range_element_weak(self, element_name, damage_name):
         self.element_name = element_name
         self.damage_name = damage_name
@@ -357,7 +362,7 @@ class Enemy:
             print("[DEBUG] List of characters elements stats: ")
             print(self.element_container)
 
-            Vis.enemy_weak_graph(self.element_name, self.damage_name, self.element_container, graph_title, title)
+            enemy_weak_graph(self.element_name, self.damage_name, self.element_container, graph_title, title)
             print('\n\n')
 
     """
@@ -365,6 +370,7 @@ class Enemy:
     This section was created for users to define the stats distribution.
     You must override it, if you want different stats distribution method.
     """
+
     def range_stats(self, stats_name, basic_min_stats, basic_max_stats):
         self.stats_name = stats_name
         self.range_hp = np.zeros(len(self.enemy_types))
@@ -379,13 +385,13 @@ class Enemy:
                 # MP Focused
                 if mix_type == 1:
                     botLimitHP = self.min_hp
-                    topLimitHP = botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                    topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                     print("Mixed(MP) Top HP: ", topLimitHP)
 
                     self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                     botLimitMP = self.min_mp
-                    topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                    topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                     print("Mixed(MP) Top MP: ", topLimitMP)
 
                     self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -411,13 +417,13 @@ class Enemy:
                 # HP Focused
                 if mix_type == 2:
                     botLimitHP = self.min_hp
-                    topLimitHP = botLimitHP + botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                    topLimitHP = botLimitHP + botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                     print("Mixed(HP) Top HP: ", topLimitHP)
 
                     self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                     botLimitMP = self.min_mp
-                    topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                    topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                     print("Mixed(HP) Top MP: ", topLimitMP)
 
                     self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -443,13 +449,13 @@ class Enemy:
             # Hard Magic
             if self.enemy_types[i] == 1:
                 botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                 print("Hard Magic Top HP: ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                 print("Hard Magic Top MP: ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -480,13 +486,13 @@ class Enemy:
             # Soft Magic
             if self.enemy_types[i] == 2:
                 botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                 print("Soft Magic Top HP: ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                 print("Soft Magic Top MP: ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -511,13 +517,13 @@ class Enemy:
             # Hard Strength
             if self.enemy_types[i] == 3:
                 botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                 print("Hard Strength Top HP: ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                 print("Hard Strength Top MP: ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -548,13 +554,13 @@ class Enemy:
             # Soft Strength
             if self.enemy_types[i] == 4:
                 botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + Mod.round_number((self.range_level[i] / 100) * self.max_hp)
+                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
                 print("Soft Strength Top HP: ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + Mod.round_number((self.range_level[i] / 100) * self.max_mp)
+                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
                 print("Soft Strength Top MP: ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
@@ -583,10 +589,10 @@ class Enemy:
         print("[DEBUG] Range Enemy Stats: ")
         print(self.stats_container)
 
-        Vis.enemy_hp_graph(self.range_level, self.enemy_name, self.range_hp, title)
-        Vis.enemy_mp_graph(self.range_level, self.enemy_name, self.range_mp, title)
-        Vis.enemy_stats_graph(self.range_level, self.enemy_name, self.stats_name, self.stats_container,
-                              graph_title, title)
+        enemy_hp_graph(self.range_level, self.enemy_name, self.range_hp, title)
+        enemy_mp_graph(self.range_level, self.enemy_name, self.range_mp, title)
+        enemy_stats_graph(self.range_level, self.enemy_name, self.stats_name, self.stats_container,
+                          graph_title, title)
         print('\n\n')
 
     @staticmethod
