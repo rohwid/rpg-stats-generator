@@ -72,8 +72,11 @@ class Player:
         print("\n\n")
 
     def range_health_points(self, start_hp, second_hp, column_name):
-        self.range_hp = np.arange(start_hp, start_hp + (self.max_level * (second_hp - start_hp)),
-                                  second_hp - start_hp)
+        self.range_hp = np.arange(
+            start_hp,
+            start_hp + (self.max_level * (second_hp - start_hp)),
+            second_hp - start_hp
+        )
 
         self.main_column = Player.set_column_main(1, column_name, self.main_column)
 
@@ -86,9 +89,11 @@ class Player:
         print("\n\n")
 
     def range_magic_points(self, start_mp, second_mp, column_name):
-        self.range_mp = np.arange(start_mp,
-                                  start_mp + (self.max_level * (second_mp - start_mp)),
-                                  second_mp - start_mp)
+        self.range_mp = np.arange(
+            start_mp,
+            start_mp + (self.max_level * (second_mp - start_mp)),
+            second_mp - start_mp
+        )
 
         self.main_column = Player.set_column_main(2, column_name, self.main_column)
 
@@ -98,7 +103,6 @@ class Player:
         print(self.range_mp)
 
         player_mp_graph(self.range_level, self.range_mp, graph_title, title)
-
         print("\n\n")
 
     def range_element_weak(self, name_element, char_weak_number):
@@ -106,32 +110,37 @@ class Player:
 
         for i in range(len(char_weak_number)):
             if char_weak_number[i] == 2:
-                if self.element_container.all:
+                if self.element_container.size == 0:
                     self.element_container = np.full((self.max_level, 1), 2)
                 else:
-                    self.element_container = np.concatenate((self.element_container,
-                                                             np.full((self.max_level, 1), 2)), axis=1)
+                    self.element_container = np.concatenate(
+                        (self.element_container, np.full((self.max_level, 1), 2)),
+                        axis=1
+                    )
 
             if char_weak_number[i] == 1:
-                if self.element_container.all:
+                if self.element_container.size == 0:
                     self.element_container = np.ones((self.max_level, 1))
                 else:
-                    self.element_container = np.concatenate((self.element_container,
-                                                             np.ones((self.max_level, 1))), axis=1)
+                    self.element_container = np.concatenate(
+                        (self.element_container, np.ones((self.max_level, 1))),
+                        axis=1
+                    )
 
             if char_weak_number[i] == 0:
-                if self.element_container.all:
+                if self.element_container.size == 0:
                     self.element_container = np.zeros((self.max_level, 1))
                 else:
-                    self.element_container = np.concatenate((self.element_container,
-                                                             np.zeros((self.max_level, 1))), axis=1)
+                    self.element_container = np.concatenate(
+                        (self.element_container, np.zeros((self.max_level, 1))),
+                        axis=1
+                    )
 
     def show_element_weak(self):
         print("[DEBUG] ~ WEAKNESSES")
         print("[DEBUG] List of characters elements: ", self.name_element)
         print("[DEBUG] List of characters elements stats: ")
         print(self.element_container)
-
         print("\n\n")
 
     def range_stats(self, name_stats, stats_max_value, stats_to_assign):
@@ -188,7 +197,6 @@ class Player:
         print(self.stats_container)
 
         player_stats_graph(self.stats_container, self.range_level, self.name_stats, graph_title, title)
-
         print("\n\n")
 
     @staticmethod
@@ -212,6 +220,7 @@ class Player:
     def set_mp_container(data_container, column_info, max_level, range_mp):
         if data_container[column_info[2]].shape[0] == max_level:
             data_container[column_info[2]] = range_mp
+
             return data_container
         else:
             sys.exit("[ERROR] The MP's rows not match with the rows of data container!")
@@ -237,6 +246,7 @@ class Player:
     @staticmethod
     def set_stats(data_container, init_column, column_info, max_level, stats_container):
         if stats_container.shape[0] == max_level:
+
             # Without Element (Usually Action)
             if len(init_column) == 3:
                 len_element_container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
@@ -264,109 +274,142 @@ class Player:
         row_level = np.arange((self.max_level - (self.max_level - self.start_level)), self.max_level + 1)
         init_column = self.main_column
 
-        if self.range_mp.all:
-            if self.name_element:
+        if self.range_mp.size == 0:
+            if not self.name_element:
                 column_info = np.concatenate((init_column, self.name_stats), axis=None)
 
                 self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
 
-                self.data_container = Player.set_level_container(self.data_container,
-                                                                 column_info,
-                                                                 self.max_level,
-                                                                 self.range_level)
+                self.data_container = Player.set_level_container(
+                    self.data_container,
+                    column_info,
+                    self.max_level,
+                    self.range_level
+                )
 
-                self.data_container = Player.set_hp_container(self.data_container,
-                                                              column_info,
-                                                              self.max_level,
-                                                              self.range_hp)
+                self.data_container = Player.set_hp_container(
+                    self.data_container,
+                    column_info,
+                    self.max_level,
+                    self.range_hp
+                )
 
-                self.data_container = Player.set_stats(self.data_container,
-                                                       init_column,
-                                                       column_info,
-                                                       self.max_level,
-                                                       self.stats_container)
+                self.data_container = Player.set_stats(
+                    self.data_container,
+                    init_column,
+                    column_info,
+                    self.max_level,
+                    self.stats_container
+                )
             else:
                 column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
 
                 self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
 
-                self.data_container = Player.set_level_container(self.data_container,
-                                                                 column_info,
-                                                                 self.max_level,
-                                                                 self.range_level)
+                self.data_container = Player.set_level_container(
+                    self.data_container,
+                    column_info,
+                    self.max_level,
+                    self.range_level
+                )
 
-                self.data_container = Player.set_hp_container(self.data_container,
-                                                              column_info,
-                                                              self.max_level,
-                                                              self.range_hp)
+                self.data_container = Player.set_hp_container(
+                    self.data_container,
+                    column_info,
+                    self.max_level,
+                    self.range_hp
+                )
 
-                self.data_container = Player.set_element_container(self.data_container,
-                                                                   init_column,
-                                                                   column_info,
-                                                                   self.max_level,
-                                                                   self.element_container)
+                self.data_container = Player.set_element_container(
+                    self.data_container,
+                    init_column,
+                    column_info,
+                    self.max_level,
+                    self.element_container
+                )
 
-                self.data_container = Player.set_stats(self.data_container,
-                                                       init_column,
-                                                       column_info,
-                                                       self.max_level,
-                                                       self.stats_container)
+                self.data_container = Player.set_stats(
+                    self.data_container,
+                    init_column, column_info,
+                    self.max_level,
+                    self.stats_container
+                )
+
         elif not self.name_element:
             column_info = np.concatenate((init_column, self.name_stats), axis=None)
 
             self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
 
-            self.data_container = Player.set_level_container(self.data_container,
-                                                             column_info,
-                                                             self.max_level,
-                                                             self.range_level)
+            self.data_container = Player.set_level_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_level
+            )
 
-            self.data_container = Player.set_hp_container(self.data_container,
-                                                          column_info,
-                                                          self.max_level,
-                                                          self.range_hp)
+            self.data_container = Player.set_hp_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_hp
+            )
 
-            self.data_container = Player.set_mp_container(self.data_container,
-                                                          column_info,
-                                                          self.max_level,
-                                                          self.range_mp)
+            self.data_container = Player.set_mp_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_mp
+            )
 
-            self.data_container = Player.set_stats(self.data_container,
-                                                   init_column,
-                                                   column_info,
-                                                   self.max_level,
-                                                   self.stats_container)
+            self.data_container = Player.set_stats(
+                self.data_container,
+                init_column,
+                column_info,
+                self.max_level,
+                self.stats_container
+            )
+
         else:
             column_info = np.concatenate((init_column, self.name_element, self.name_stats), axis=None)
 
             self.data_container = pd.DataFrame(0, row_level[:], column_info[:])
 
-            self.data_container = Player.set_level_container(self.data_container,
-                                                             column_info,
-                                                             self.max_level,
-                                                             self.range_level)
+            self.data_container = Player.set_level_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_level
+            )
 
-            self.data_container = Player.set_hp_container(self.data_container,
-                                                          column_info,
-                                                          self.max_level,
-                                                          self.range_hp)
+            self.data_container = Player.set_hp_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_hp
+            )
 
-            self.data_container = Player.set_mp_container(self.data_container,
-                                                          column_info,
-                                                          self.max_level,
-                                                          self.range_mp)
+            self.data_container = Player.set_mp_container(
+                self.data_container,
+                column_info,
+                self.max_level,
+                self.range_mp
+            )
 
-            self.data_container = Player.set_element_container(self.data_container,
-                                                               init_column,
-                                                               column_info,
-                                                               self.max_level,
-                                                               self.element_container)
+            self.data_container = Player.set_element_container(
+                self.data_container,
+                init_column,
+                column_info,
+                self.max_level,
+                self.element_container
+            )
 
-            self.data_container = Player.set_stats(self.data_container,
-                                                   init_column,
-                                                   column_info,
-                                                   self.max_level,
-                                                   self.stats_container)
+            self.data_container = Player.set_stats(
+                self.data_container,
+                init_column,
+                column_info,
+                self.max_level,
+                self.stats_container
+            )
 
         pd.set_option('display.max_rows', 200)
 

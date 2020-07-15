@@ -129,7 +129,7 @@ class Enemy:
         part_levels = split_range(self.levels_number, levels_class, density=False)
 
         print("[DEBUG] ~ LEVELS")
-        print("[DEBUG] Range LEVEL Distribution:         ", part_levels)
+        print("[DEBUG] Range LEVEL Distribution:       ", part_levels)
 
         # Split enemy numbers by class levels
         part_enemy = split_range(self.enemy_number, levels_class, density=False)
@@ -144,7 +144,7 @@ class Enemy:
             sub_part_levels = split_range(part_levels[i], scale, density=True)
             sub_part_enemy = split_range(part_enemy[i], scale, density=True)
 
-            print("[DEBUG] Range Sub-LEVEL Distribution:     ", sub_part_levels)
+            print("[DEBUG] Range Sub-LEVEL Distribution:   ", sub_part_levels)
             print("[DEBUG] Range Sub-ENEMY Distribution:   ", sub_part_enemy)
 
             for j in range(len(sub_part_enemy)):
@@ -386,13 +386,13 @@ class Enemy:
                 if mix_type == 1:
                     botLimitHP = self.min_hp
                     topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                    print("Mixed(MP) Top HP: ", topLimitHP)
+                    print("Mixed(MP) Top HP:     ", topLimitHP)
 
                     self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                     botLimitMP = self.min_mp
                     topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                    print("Mixed(MP) Top MP: ", topLimitMP)
+                    print("Mixed(MP) Top MP:     ", topLimitMP)
 
                     self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
 
@@ -418,13 +418,13 @@ class Enemy:
                 if mix_type == 2:
                     botLimitHP = self.min_hp
                     topLimitHP = botLimitHP + botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                    print("Mixed(HP) Top HP: ", topLimitHP)
+                    print("Mixed(HP) Top HP:     ", topLimitHP)
 
                     self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                     botLimitMP = self.min_mp
                     topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                    print("Mixed(HP) Top MP: ", topLimitMP)
+                    print("Mixed(HP) Top MP:     ", topLimitMP)
 
                     self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
 
@@ -437,7 +437,9 @@ class Enemy:
                     for j in range(self.stats_container.shape[1]):
                         botLimitST = basic_min_stats[j]
                         topLimitST = botLimitST + math.ceil(
-                            (self.range_level[i] / 100) * basic_max_stats[j])  # ceil (avoid out of range)
+                            (self.range_level[i] / 100) * basic_max_stats[j]
+                        )  # ceil (avoid out of range)
+
                         self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
 
                     # Stats Correction
@@ -450,13 +452,13 @@ class Enemy:
             if self.enemy_types[i] == 1:
                 botLimitHP = self.min_hp
                 topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Hard Magic Top HP: ", topLimitHP)
+                print("Hard Magic Top HP:    ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
                 topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Hard Magic Top MP: ", topLimitMP)
+                print("Hard Magic Top MP:    ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
 
@@ -468,8 +470,12 @@ class Enemy:
 
                 for j in range(self.stats_container.shape[1]):
                     botLimitST = basic_min_stats[j]
+
+                    # ceil (avoid out of range)
                     topLimitST = botLimitST + math.ceil(
-                        (self.range_level[i] / 100) * basic_max_stats[j])  # ceil (avoid out of range)
+                        (self.range_level[i] / 100) * basic_max_stats[j]
+                    )
+
                     self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
 
                 # Stats Correction
@@ -487,13 +493,13 @@ class Enemy:
             if self.enemy_types[i] == 2:
                 botLimitHP = self.min_hp
                 topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Soft Magic Top HP: ", topLimitHP)
+                print("Soft Magic Top HP:    ", topLimitHP)
 
                 self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
 
                 botLimitMP = self.min_mp
                 topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Soft Magic Top MP: ", topLimitMP)
+                print("Soft Magic Top MP:    ", topLimitMP)
 
                 self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
 
@@ -536,8 +542,12 @@ class Enemy:
 
                 for j in range(self.stats_container.shape[1]):
                     botLimitST = basic_min_stats[j]
+
+                    # ceil (avoid out of range)
                     topLimitST = botLimitST + math.ceil(
-                        (self.range_level[i] / 100) * basic_max_stats[j])  # ceil (avoid out of range)
+                        (self.range_level[i] / 100) * basic_max_stats[j]
+                    )
+
                     self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
 
                 # Stats Correction
@@ -573,8 +583,12 @@ class Enemy:
 
                 for j in range(self.stats_container.shape[1]):
                     botLimitST = basic_min_stats[j]
+
+                    # ceil (avoid out of range)
                     topLimitST = botLimitST + math.ceil(
-                        (self.range_level[i] / 100) * basic_max_stats[j])  # ceil (avoid out of range)
+                        (self.range_level[i] / 100) * basic_max_stats[j]
+                    )
+
                     self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
 
                 # Stats Correction
@@ -591,8 +605,16 @@ class Enemy:
 
         enemy_hp_graph(self.range_level, self.enemy_name, self.range_hp, title)
         enemy_mp_graph(self.range_level, self.enemy_name, self.range_mp, title)
-        enemy_stats_graph(self.range_level, self.enemy_name, self.stats_name, self.stats_container,
-                          graph_title, title)
+
+        enemy_stats_graph(
+            self.range_level,
+            self.enemy_name,
+            self.stats_name,
+            self.stats_container,
+            graph_title,
+            title
+        )
+
         print('\n\n')
 
     @staticmethod
@@ -684,71 +706,200 @@ class Enemy:
         row_number = np.arange((self.enemy_number - (self.enemy_number - 1)), self.enemy_number + 1)
         init_column = self.main_column
 
-        if self.range_mp.all:
+        if self.range_mp.size == 0:
             if not self.element_name:
                 column_info = np.concatenate((init_column, self.stats_name), axis=None)
 
                 self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
-                self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
-                                                               self.enemy_name)
-                self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
-                                                                self.range_level)
-                self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
-                                                             self.range_hp)
-                self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
-                                                               self.enemy_types)
-                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
-                                                      self.enemy_number, self.stats_container)
+
+                self.data_container = Enemy.set_name_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.enemy_name
+                )
+
+                self.data_container = Enemy.set_level_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.range_level
+                )
+
+                self.data_container = Enemy.set_hp_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.range_hp
+                )
+
+                self.data_container = Enemy.set_type_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.enemy_types
+                )
+
+                self.data_container = Enemy.set_stats(
+                    self.data_container,
+                    init_column,
+                    column_info,
+                    self.enemy_number,
+                    self.stats_container
+                )
+
             else:
                 column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
 
                 self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
-                self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
-                                                               self.enemy_name)
-                self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
-                                                                self.range_level)
-                self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
-                                                             self.range_hp)
-                self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
-                                                               self.enemy_types)
-                self.data_container = Enemy.set_element_container(self.data_container, init_column, column_info,
-                                                                  self.enemy_number, self.element_container)
-                self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
-                                                      self.enemy_number, self.stats_container)
+
+                self.data_container = Enemy.set_name_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.enemy_name
+                )
+
+                self.data_container = Enemy.set_level_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.range_level
+                )
+
+                self.data_container = Enemy.set_hp_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.range_hp
+                )
+
+                self.data_container = Enemy.set_type_container(
+                    self.data_container,
+                    column_info,
+                    self.enemy_number,
+                    self.enemy_types
+                )
+
+                self.data_container = Enemy.set_element_container(
+                    self.data_container,
+                    init_column,
+                    column_info,
+                    self.enemy_number,
+                    self.element_container
+                )
+
+                self.data_container = Enemy.set_stats(
+                    self.data_container,
+                    init_column,
+                    column_info,
+                    self.enemy_number,
+                    self.stats_container
+                )
+
         elif not self.element_name:
             column_info = np.concatenate((init_column, self.stats_name), axis=None)
 
             self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
-            self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
-                                                           self.enemy_name)
-            self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
-                                                            self.range_level)
-            self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
-                                                         self.range_hp)
-            self.data_container = Enemy.set_mp_container(self.data_container, column_info, self.enemy_number,
-                                                         self.range_mp)
-            self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
-                                                           self.enemy_types)
-            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
-                                                  self.enemy_number, self.stats_container)
+
+            self.data_container = Enemy.set_name_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.enemy_name
+            )
+
+            self.data_container = Enemy.set_level_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_level
+            )
+
+            self.data_container = Enemy.set_hp_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_hp
+            )
+
+            self.data_container = Enemy.set_mp_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_mp
+            )
+
+            self.data_container = Enemy.set_type_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.enemy_types
+            )
+
+            self.data_container = Enemy.set_stats(
+                self.data_container,
+                init_column,
+                column_info,
+                self.enemy_number,
+                self.stats_container
+            )
+
         else:
             column_info = np.concatenate((init_column, self.element_name, self.stats_name), axis=None)
 
             self.data_container = pd.DataFrame(0, row_number[:], column_info[:])
-            self.data_container = Enemy.set_name_container(self.data_container, column_info, self.enemy_number,
-                                                           self.enemy_name)
-            self.data_container = Enemy.set_level_container(self.data_container, column_info, self.enemy_number,
-                                                            self.range_level)
-            self.data_container = Enemy.set_hp_container(self.data_container, column_info, self.enemy_number,
-                                                         self.range_hp)
-            self.data_container = Enemy.set_mp_container(self.data_container, column_info, self.enemy_number,
-                                                         self.range_mp)
-            self.data_container = Enemy.set_type_container(self.data_container, column_info, self.enemy_number,
-                                                           self.enemy_types)
-            self.data_container = Enemy.set_element_container(self.data_container, init_column, column_info,
-                                                              self.enemy_number, self.element_container)
-            self.data_container = Enemy.set_stats(self.data_container, init_column, column_info,
-                                                  self.enemy_number, self.stats_container)
+
+            self.data_container = Enemy.set_name_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.enemy_name
+            )
+
+            self.data_container = Enemy.set_level_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_level
+            )
+
+            self.data_container = Enemy.set_hp_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_hp
+            )
+
+            self.data_container = Enemy.set_mp_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.range_mp
+            )
+
+            self.data_container = Enemy.set_type_container(
+                self.data_container,
+                column_info,
+                self.enemy_number,
+                self.enemy_types
+            )
+
+            self.data_container = Enemy.set_element_container(
+                self.data_container,
+                init_column,
+                column_info,
+                self.enemy_number,
+                self.element_container
+            )
+
+            self.data_container = Enemy.set_stats(
+                self.data_container,
+                init_column,
+                column_info,
+                self.enemy_number,
+                self.stats_container
+            )
 
         pd.set_option('display.max_rows', 400)
 
