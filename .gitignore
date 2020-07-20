@@ -96,3 +96,9 @@ venv/*
 cuda_*
 cudnn-*
 nccl_*
+
+# PyCharm config
+.idea/*
+
+# VSCode config
+.vscode/*
