@@ -71,7 +71,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 
-## Python
+# Python
 .ipynb_checkpoints/
 *.pyc
 __pycache__
@@ -85,8 +85,7 @@ checkpoint
 htmlcov
 mnist
 
-# PyCharm
-.idea/
+# PyCharm virtualenv
 venv/*
 
 # OS junk files
