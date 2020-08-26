@@ -219,8 +219,8 @@ def enemy_hp_graph(level, enemy_name, hp, title):
 
     fig = plt.figure()
     axes = fig.add_subplot(111, projection='3d')
-    nameEnemies = np.arange(0, len(enemy_name))
-    axes.scatter(level, nameEnemies, hp, color='#2980B9')
+    name_enemies = np.arange(0, len(enemy_name))
+    axes.scatter(level, name_enemies, hp, color='#2980B9')
 
     label_3d_fig(axes, "Levels", "Enemies(n)", "HP", 20, 16)
 
@@ -237,8 +237,8 @@ def enemy_mp_graph(level, enemy_name, mp, title):
     fig = plt.figure()
     axes = fig.add_subplot(111, projection='3d')
 
-    nameEnemies = np.arange(0, len(enemy_name))
-    axes.scatter(level, nameEnemies, mp, color='#2980B9')
+    name_enemies = np.arange(0, len(enemy_name))
+    axes.scatter(level, name_enemies, mp, color='#2980B9')
 
     label_3d_fig(axes, "Levels", "Enemies(n)", "MP", 20, 16)
 
@@ -255,10 +255,10 @@ def enemy_stats_graph(level, enemy_name, stats_name, stats_container, graph_titl
     single_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, title)
 
     for i in range(stats_container.shape[1]):
-        iStatsName = stats_name[i]
-        iStatsContainer = stats_container[:, i]
+        i_stats_name = stats_name[i]
+        i_stats_container = stats_container[:, i]
         color = colorDB[i]
-        parted_enemy_stats(level, enemies, iStatsName, iStatsContainer, color, title)
+        parted_enemy_stats(level, enemies, i_stats_name, i_stats_container, color, title)
 
 
 def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_title, title):
@@ -296,6 +296,6 @@ def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_col
     if title is not None and title:
         axes.set_title("Enemies " + stats_name + " Stats Distribution", fontsize=20, fontweight='bold')
 
-    saveStatsName = "graph_output_result/Enemy" + stats_name + "Distribute"
-    fig.savefig(saveStatsName)
+    save_stats_name = "graph_output_result/Enemy" + stats_name + "Distribute"
+    fig.savefig(save_stats_name)
     plt.show()

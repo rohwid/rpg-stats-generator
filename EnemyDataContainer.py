@@ -272,19 +272,19 @@ class Enemy:
         print("\n")
 
         # Handle rest of data
-        restEnemy = len(self.enemy_types) - len(shuffle_type)
+        rest_enemy = len(self.enemy_types) - len(shuffle_type)
 
         # Set rest of enemy type
-        if restEnemy > 0:
+        if rest_enemy > 0:
             # Set the index to continue from shuffle_type
-            restEnemyIndex = len(shuffle_type)
+            rest_enemy_index = len(shuffle_type)
 
             for i in range(len(rest_distribute_level)):
                 if rest_distribute_level[i] > 0:
                     for j in range(int(rest_distribute_level[i])):
                         # Continue to assign the rest
-                        self.enemy_types[restEnemyIndex] = i
-                        restEnemyIndex = restEnemyIndex + 1
+                        self.enemy_types[rest_enemy_index] = i
+                        rest_enemy_index = rest_enemy_index + 1
 
     def show_range_enemy_type(self, graph_title, title):
         print("[DEBUG] Range Enemy Type Dimension: ", self.enemy_types.shape)
@@ -384,218 +384,218 @@ class Enemy:
 
                 # MP Focused
                 if mix_type == 1:
-                    botLimitHP = self.min_hp
-                    topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                    print("Mixed(MP) Top HP:     ", topLimitHP)
+                    bot_limit_hp = self.min_hp
+                    top_limit_hp = bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                    print("Mixed(MP) Top HP:     ", top_limit_hp)
 
-                    self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                    self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                    botLimitMP = self.min_mp
-                    topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                    print("Mixed(MP) Top MP:     ", topLimitMP)
+                    bot_limit_mp = self.min_mp
+                    top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                    print("Mixed(MP) Top MP:     ", top_limit_mp)
 
-                    self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                    self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                     # Stats Correction
                     if self.range_hp[i] >= self.range_mp[i]:
-                        botLimitMP = self.range_hp[i]
-                        topLimitMP = botLimitMP + self.range_hp[i] + 10
-                        self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                        bot_limit_mp = self.range_hp[i]
+                        top_limit_mp = bot_limit_mp + self.range_hp[i] + 10
+                        self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                     for j in range(self.stats_container.shape[1]):
-                        botLimitST = basic_min_stats[j]
-                        topLimitST = botLimitST + math.ceil(
+                        bot_limit_st = basic_min_stats[j]
+                        top_limit_st = bot_limit_st + math.ceil(
                             (self.range_level[i] / 100) * basic_max_stats[j])  # ceil (avoid out of range)
-                        self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                        self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                     # Stats Correction
                     if self.stats_container[i][2] >= self.stats_container[i][1]:
-                        botLimitST = self.stats_container[i][2]
-                        topLimitST = botLimitST + 10
-                        self.stats_container[i][1] = np.random.randint(botLimitST, topLimitST)
+                        bot_limit_st = self.stats_container[i][2]
+                        top_limit_st = bot_limit_st + 10
+                        self.stats_container[i][1] = np.random.randint(bot_limit_st, top_limit_st)
 
                 # HP Focused
                 if mix_type == 2:
-                    botLimitHP = self.min_hp
-                    topLimitHP = botLimitHP + botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                    print("Mixed(HP) Top HP:     ", topLimitHP)
+                    bot_limit_hp = self.min_hp
+                    top_limit_hp = bot_limit_hp + bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                    print("Mixed(HP) Top HP:     ", top_limit_hp)
 
-                    self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                    self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                    botLimitMP = self.min_mp
-                    topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                    print("Mixed(HP) Top MP:     ", topLimitMP)
+                    bot_limit_mp = self.min_mp
+                    top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                    print("Mixed(HP) Top MP:     ", top_limit_mp)
 
-                    self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                    self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                     # Stats Correction
                     if self.range_mp[i] >= self.range_hp[i]:
-                        botLimitHP = self.range_mp[i]
-                        topLimitHP = botLimitHP + 10
-                        self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                        bot_limit_hp = self.range_mp[i]
+                        top_limit_hp = bot_limit_hp + 10
+                        self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
                     for j in range(self.stats_container.shape[1]):
-                        botLimitST = basic_min_stats[j]
-                        topLimitST = botLimitST + math.ceil(
+                        bot_limit_st = basic_min_stats[j]
+                        top_limit_st = bot_limit_st + math.ceil(
                             (self.range_level[i] / 100) * basic_max_stats[j]
                         )  # ceil (avoid out of range)
 
-                        self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                        self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                     # Stats Correction
                     if self.stats_container[i][1] >= self.stats_container[i][2]:
-                        botLimitST = self.stats_container[i][1]
-                        topLimitST = botLimitST + self.stats_container[i][1] + 10
-                        self.stats_container[i][2] = np.random.randint(botLimitST, topLimitST)
+                        bot_limit_st = self.stats_container[i][1]
+                        top_limit_st = bot_limit_st + self.stats_container[i][1] + 10
+                        self.stats_container[i][2] = np.random.randint(bot_limit_st, top_limit_st)
 
             # Hard Magic
             if self.enemy_types[i] == 1:
-                botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Hard Magic Top HP:    ", topLimitHP)
+                bot_limit_hp = self.min_hp
+                top_limit_hp = bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                print("Hard Magic Top HP:    ", top_limit_hp)
 
-                self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Hard Magic Top MP:    ", topLimitMP)
+                bot_limit_mp = self.min_mp
+                top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                print("Hard Magic Top MP:    ", top_limit_mp)
 
-                self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 # Stats Correction
                 if self.range_hp[i] >= self.range_mp[i]:
-                    botLimitMP = self.range_hp[i] + 100
-                    topLimitMP = botLimitMP + 200
-                    self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                    bot_limit_mp = self.range_hp[i] + 100
+                    top_limit_mp = bot_limit_mp + 200
+                    self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 for j in range(self.stats_container.shape[1]):
-                    botLimitST = basic_min_stats[j]
+                    bot_limit_st = basic_min_stats[j]
 
                     # ceil (avoid out of range)
-                    topLimitST = botLimitST + math.ceil(
+                    top_limit_st = bot_limit_st + math.ceil(
                         (self.range_level[i] / 100) * basic_max_stats[j]
                     )
 
-                    self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                    self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                 # Stats Correction
                 if self.stats_container[i][2] - self.stats_container[i][1] <= 10:
                     if self.stats_container[i][2] > self.stats_container[i][1]:
-                        botLimitST = self.stats_container[i][2]
-                        topLimitST = botLimitST + 10
+                        bot_limit_st = self.stats_container[i][2]
+                        top_limit_st = bot_limit_st + 10
                     else:
-                        botLimitST = self.stats_container[i][1]
-                        topLimitST = botLimitST + 10
+                        bot_limit_st = self.stats_container[i][1]
+                        top_limit_st = bot_limit_st + 10
 
-                    self.stats_container[i][2] = np.random.randint(botLimitST, topLimitST)
+                    self.stats_container[i][2] = np.random.randint(bot_limit_st, top_limit_st)
 
             # Soft Magic
             if self.enemy_types[i] == 2:
-                botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Soft Magic Top HP:    ", topLimitHP)
+                bot_limit_hp = self.min_hp
+                top_limit_hp = bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                print("Soft Magic Top HP:    ", top_limit_hp)
 
-                self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Soft Magic Top MP:    ", topLimitMP)
+                bot_limit_mp = self.min_mp
+                top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                print("Soft Magic Top MP:    ", top_limit_mp)
 
-                self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 # Stats Correction
                 if self.range_hp[i] >= self.range_mp[i]:
-                    botLimitMP = self.range_hp[i]
-                    topLimitMP = botLimitMP + 10
-                    self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                    bot_limit_mp = self.range_hp[i]
+                    top_limit_mp = bot_limit_mp + 10
+                    self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 for j in range(self.stats_container.shape[1]):
-                    botLimitST = basic_min_stats[j]
-                    topLimitST = botLimitST + math.ceil((self.range_level[i] / 100) * basic_max_stats[j])
-                    self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                    bot_limit_st = basic_min_stats[j]
+                    top_limit_st = bot_limit_st + math.ceil((self.range_level[i] / 100) * basic_max_stats[j])
+                    self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                 # Stats Correction
                 if self.stats_container[i][1] >= self.stats_container[i][2]:
-                    botLimitST = basic_min_stats[1]
-                    topLimitST = botLimitST + 10
-                    self.stats_container[i][2] = np.random.randint(botLimitST, topLimitST)
+                    bot_limit_st = basic_min_stats[1]
+                    top_limit_st = bot_limit_st + 10
+                    self.stats_container[i][2] = np.random.randint(bot_limit_st, top_limit_st)
 
             # Hard Strength
             if self.enemy_types[i] == 3:
-                botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Hard Strength Top HP: ", topLimitHP)
+                bot_limit_hp = self.min_hp
+                top_limit_hp = bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                print("Hard Strength Top HP: ", top_limit_hp)
 
-                self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Hard Strength Top MP: ", topLimitMP)
+                bot_limit_mp = self.min_mp
+                top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                print("Hard Strength Top MP: ", top_limit_mp)
 
-                self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 # Stats Correction
                 if self.range_mp[i] >= self.range_hp[i]:
-                    botLimitHP = self.range_mp[i] + 100
-                    topLimitHP = botLimitHP + 200
-                    self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                    bot_limit_hp = self.range_mp[i] + 100
+                    top_limit_hp = bot_limit_hp + 200
+                    self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
                 for j in range(self.stats_container.shape[1]):
-                    botLimitST = basic_min_stats[j]
+                    bot_limit_st = basic_min_stats[j]
 
                     # ceil (avoid out of range)
-                    topLimitST = botLimitST + math.ceil(
+                    top_limit_st = bot_limit_st + math.ceil(
                         (self.range_level[i] / 100) * basic_max_stats[j]
                     )
 
-                    self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                    self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                 # Stats Correction
                 if self.stats_container[i][1] - self.stats_container[i][2] <= 10:
                     if self.stats_container[i][1] > self.stats_container[i][2]:
-                        botLimitST = self.stats_container[i][1]
-                        topLimitST = botLimitST + 10
+                        bot_limit_st = self.stats_container[i][1]
+                        top_limit_st = bot_limit_st + 10
                     else:
-                        botLimitST = self.stats_container[i][2]
-                        topLimitST = botLimitST + 10
+                        bot_limit_st = self.stats_container[i][2]
+                        top_limit_st = bot_limit_st + 10
 
-                    self.stats_container[i][1] = np.random.randint(botLimitST, topLimitST)
+                    self.stats_container[i][1] = np.random.randint(bot_limit_st, top_limit_st)
 
             # Soft Strength
             if self.enemy_types[i] == 4:
-                botLimitHP = self.min_hp
-                topLimitHP = botLimitHP + round_number((self.range_level[i] / 100) * self.max_hp)
-                print("Soft Strength Top HP: ", topLimitHP)
+                bot_limit_hp = self.min_hp
+                top_limit_hp = bot_limit_hp + round_number((self.range_level[i] / 100) * self.max_hp)
+                print("Soft Strength Top HP: ", top_limit_hp)
 
-                self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
-                botLimitMP = self.min_mp
-                topLimitMP = botLimitMP + round_number((self.range_level[i] / 100) * self.max_mp)
-                print("Soft Strength Top MP: ", topLimitMP)
+                bot_limit_mp = self.min_mp
+                top_limit_mp = bot_limit_mp + round_number((self.range_level[i] / 100) * self.max_mp)
+                print("Soft Strength Top MP: ", top_limit_mp)
 
-                self.range_mp[i] = np.random.randint(botLimitMP, topLimitMP)
+                self.range_mp[i] = np.random.randint(bot_limit_mp, top_limit_mp)
 
                 # Stats Correction
                 if self.range_mp[i] >= self.range_hp[i]:
-                    botLimitHP = self.range_mp[i]
-                    topLimitHP = botLimitHP + 10
-                    self.range_hp[i] = np.random.randint(botLimitHP, topLimitHP)
+                    bot_limit_hp = self.range_mp[i]
+                    top_limit_hp = bot_limit_hp + 10
+                    self.range_hp[i] = np.random.randint(bot_limit_hp, top_limit_hp)
 
                 for j in range(self.stats_container.shape[1]):
-                    botLimitST = basic_min_stats[j]
+                    bot_limit_st = basic_min_stats[j]
 
                     # ceil (avoid out of range)
-                    topLimitST = botLimitST + math.ceil(
+                    top_limit_st = bot_limit_st + math.ceil(
                         (self.range_level[i] / 100) * basic_max_stats[j]
                     )
 
-                    self.stats_container[i][j] = np.random.randint(botLimitST, topLimitST)
+                    self.stats_container[i][j] = np.random.randint(bot_limit_st, top_limit_st)
 
                 # Stats Correction
                 if self.stats_container[i][2] >= self.stats_container[i][1]:
-                    botLimitST = basic_min_stats[2]
-                    topLimitST = botLimitST + 10
-                    self.stats_container[i][1] = np.random.randint(botLimitST, topLimitST)
+                    bot_limit_st = basic_min_stats[2]
+                    top_limit_st = bot_limit_st + 10
+                    self.stats_container[i][1] = np.random.randint(bot_limit_st, top_limit_st)
 
     def show_range_stats(self, graph_title, title):
         print("[DEBUG] ~ STATS")
@@ -681,17 +681,17 @@ class Enemy:
 
             # Without Element (Usually Action)
             if len(init_column) == 6:
-                len_element_Container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
+                len_element_container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
 
                 for i in range(stats_container.shape[1]):
-                    data_container[column_info[len(init_column) + len_element_Container + i]] = stats_container[:, i]
+                    data_container[column_info[len(init_column) + len_element_container + i]] = stats_container[:, i]
 
             # Without MP and Element (Usually Action)
             elif len(init_column) == 5:
-                len_element_Container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
+                len_element_container = column_info.shape[0] - (len(init_column) + stats_container.shape[1])
 
                 for i in range(stats_container.shape[1]):
-                    data_container[column_info[len(init_column) + len_element_Container + i]] = stats_container[:, i]
+                    data_container[column_info[len(init_column) + len_element_container + i]] = stats_container[:, i]
 
             # Others
             else:
