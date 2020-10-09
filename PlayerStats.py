@@ -1,4 +1,5 @@
 from PlayerDataContainer import Player
+import datetime
 
 """
 STATS GENERATOR FOR TURN BASED OR ACTION RPG (ROLE PLAYING GAMES)
@@ -25,24 +26,41 @@ def protagonist_char():
     # [RANGE CHARACTERS LEVELS]
     start_level = 1
 
+    # Show Debug
+    debug = False
+
     protagonist.range_levels(start_level, 'Levels')
-    protagonist.show_range_levels()
+    protagonist.show_range_levels(debug)
 
     # [RANGE CHARACTERS HP]
     start_hp = 224
     next_hp = 228
+
+    # Show Graph and Debug
+    graph = False
+    debug = False
+
+    # Show Graph Title
     graph_title = "Player HP Distribution"
+    title = False
 
     protagonist.range_health_points(start_hp, next_hp, 'HP')
-    protagonist.show_range_health_points(graph_title, title=False)
+    protagonist.show_range_health_points(graph_title, graph, title, debug)
 
     # [RANGE CHARACTERS MP]
     start_mp = 100
     next_mp = 102
+
+    # Show Graph and Debug
+    graph = False
+    debug = False
+
+    # Show Graph Title
     graph_title = "Player MP Distribution"
+    title = False
 
     protagonist.range_magic_points(start_mp, next_mp, 'MP')
-    protagonist.show_range_magic_points(graph_title, title=False)
+    protagonist.show_range_magic_points(graph_title, graph, title, debug)
 
     """
     [RANGE CHARACTERS WEAKNESSES]
@@ -55,21 +73,33 @@ def protagonist_char():
     elements_name = ['Phys', 'Water', 'Wind', 'Earth', 'Fire']
     char_weak_number = [0, 0, 2, 1, 2]
 
+    # Show Debug
+    debug = False
+
     protagonist.range_element_weak(elements_name, char_weak_number)
-    protagonist.show_element_weak()
+    protagonist.show_element_weak(debug)
 
     # [RANGE CHARACTERS STATS]
     name_stats = ['Strength', 'Magic', 'Endurance', 'Speed', 'Luck']
     stats_max_value = [88, 32, 81, 43, 56]
     stats_to_assign = [2, 1]
+
+    # Show Graph and Debug
+    graph = False
+    debug = False
+
+    # Show Graph Title
     graph_title = "Player Stats Distribution"
+    title = False
 
     protagonist.range_stats(name_stats, stats_max_value, stats_to_assign)
-    protagonist.show_range_stats(graph_title, title=False)
+    protagonist.show_range_stats(graph_title, graph, title, debug)
 
     # Parse All Data to The Tables
     protagonist.generate_stats()
 
 
 if __name__ == "__main__":
+    begin_time = datetime.datetime.now()
     protagonist_char()
+    print("\nTime to run this program: ", datetime.datetime.now() - begin_time)

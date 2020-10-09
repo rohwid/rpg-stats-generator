@@ -52,7 +52,7 @@ def label_3d_fig(axes, x_name, y_name, z_name, pad_size, size):
     axes.zaxis.labelpad = pad_size
 
 
-def player_hp_graph(hp, level, graph_title, title):
+def player_hp_graph(hp, level, graph_title, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -67,10 +67,12 @@ def player_hp_graph(hp, level, graph_title, title):
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
     fig.savefig('graph_output_result/PlayerHpDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def player_mp_graph(mp, level, graph_title, title):
+def player_mp_graph(mp, level, graph_title, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -84,10 +86,12 @@ def player_mp_graph(mp, level, graph_title, title):
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
     fig.savefig('graph_output_result/PlayerMpDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def player_stats_graph(stats, level, name_stats, graph_title, title):
+def player_stats_graph(stats, level, name_stats, graph_title, graph, title):
     init_plt()
 
     stats_graph = np.zeros((stats.shape[0], stats.shape[1]))
@@ -114,10 +118,12 @@ def player_stats_graph(stats, level, name_stats, graph_title, title):
 
     axes.legend()
     fig.savefig('graph_output_result/PlayerStatsDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_level_graph(range_level, graph_title, title):
+def enemy_level_graph(range_level, graph_title, graph, title):
     init_plt()
 
     num_bins = int(max(range_level))
@@ -129,10 +135,12 @@ def enemy_level_graph(range_level, graph_title, title):
         plt.title(graph_title, fontsize=20, fontweight='bold')
 
     plt.savefig('graph_output_result/EnemyLevelDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_level_normal_distribution(range_level, graph_title, title):
+def enemy_level_normal_distribution(range_level, graph_title, graph, title):
     init_plt()
 
     mean = mean_values(range_level)
@@ -148,10 +156,12 @@ def enemy_level_normal_distribution(range_level, graph_title, title):
         plt.title(graph_title, fontsize=20, fontweight='bold')
 
     plt.savefig('graph_output_result/EnemyLevelDistributionNormal.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_type_graph(enemy_type, enemies_type, graph_title, title):
+def enemy_type_graph(enemy_type, enemies_type, graph_title, graph, title):
     init_plt()
 
     name = np.arange(len(enemy_type))
@@ -171,10 +181,12 @@ def enemy_type_graph(enemy_type, enemies_type, graph_title, title):
         plt.title('Enemies Type Distribution', fontsize=20, fontweight='bold')
 
     plt.savefig('graph_output_result/EnemyTypeDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_weak_graph(element_name, damage_name, weak_container, graph_title, title):
+def enemy_weak_graph(element_name, damage_name, weak_container, graph_title, graph, title):
     init_plt()
 
     # set width of bar
@@ -211,10 +223,12 @@ def enemy_weak_graph(element_name, damage_name, weak_container, graph_title, tit
     plt.legend()
 
     plt.savefig('graph_output_result/EnemyWeakDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_hp_graph(level, enemy_name, hp, title):
+def enemy_hp_graph(level, enemy_name, hp, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -228,10 +242,12 @@ def enemy_hp_graph(level, enemy_name, hp, title):
         axes.set_title("Enemies HP Stats Distribution", fontsize=20, fontweight='bold')
 
     fig.savefig('graph_output_result/EnemyHpDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_mp_graph(level, enemy_name, mp, title):
+def enemy_mp_graph(level, enemy_name, mp, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -246,22 +262,24 @@ def enemy_mp_graph(level, enemy_name, mp, title):
         axes.set_title("Enemies MP Stats Distribution", fontsize=20, fontweight='bold')
 
     fig.savefig('graph_output_result/EnemyMpDistribution.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def enemy_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, title):
+def enemy_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, graph, title):
     enemies = np.arange(0, len(enemy_name))
 
-    single_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, title)
+    single_stats_graph(level, enemy_name, stats_name, stats_container, graph_title, graph, title)
 
     for i in range(stats_container.shape[1]):
         i_stats_name = stats_name[i]
         i_stats_container = stats_container[:, i]
         color = colorDB[i]
-        parted_enemy_stats(level, enemies, i_stats_name, i_stats_container, color, title)
+        parted_enemy_stats(level, enemies, i_stats_name, i_stats_container, color, graph, title)
 
 
-def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_title, title):
+def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_title, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -280,10 +298,12 @@ def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_t
     axes.legend()
 
     fig.savefig('graph_output_result/EnemyStatsDistribute.png')
-    plt.show()
+
+    if graph:
+        plt.show()
 
 
-def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_color, title):
+def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_color, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -298,4 +318,6 @@ def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_col
 
     save_stats_name = "graph_output_result/Enemy" + stats_name + "Distribute"
     fig.savefig(save_stats_name)
-    plt.show()
+
+    if graph:
+        plt.show()

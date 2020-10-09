@@ -65,11 +65,12 @@ class Player:
 
         self.main_column = Player.set_column_main(0, column_name, self.main_column)
 
-    def show_range_levels(self):
-        print("[DEBUG] ~ LEVELS")
-        print("[DEBUG] Range Levels: ")
-        print(self.range_level)
-        print("\n\n")
+    def show_range_levels(self, debug):
+        if debug:
+            print("[DEBUG] ~ LEVELS")
+            print("[DEBUG] Range Levels: ")
+            print(self.range_level)
+            print("\n\n")
 
     def range_health_points(self, start_hp, second_hp, column_name):
         self.range_hp = np.arange(
@@ -80,13 +81,14 @@ class Player:
 
         self.main_column = Player.set_column_main(1, column_name, self.main_column)
 
-    def show_range_health_points(self, graph_title, title=None):
-        print("[DEBUG] ~ NAMES")
-        print("[DEBUG] Range HP: ")
-        print(self.range_hp)
+    def show_range_health_points(self, graph_title, graph=None, title=None, debug=None):
+        if debug:
+            print("[DEBUG] ~ NAMES")
+            print("[DEBUG] Range HP: ")
+            print(self.range_hp)
+            print("\n\n")
 
-        player_hp_graph(self.range_level, self.range_hp, graph_title, title)
-        print("\n\n")
+        player_hp_graph(self.range_level, self.range_hp, graph_title, graph, title)
 
     def range_magic_points(self, start_mp, second_mp, column_name):
         self.range_mp = np.arange(
@@ -97,13 +99,14 @@ class Player:
 
         self.main_column = Player.set_column_main(2, column_name, self.main_column)
 
-    def show_range_magic_points(self, graph_title, title=None):
-        print("[DEBUG] ~ MP")
-        print("[DEBUG] Range MP: ")
-        print(self.range_mp)
+    def show_range_magic_points(self, graph_title, graph=None, title=None, debug=None):
+        if debug:
+            print("[DEBUG] ~ MP")
+            print("[DEBUG] Range MP: ")
+            print(self.range_mp)
+            print("\n\n")
 
-        player_mp_graph(self.range_level, self.range_mp, graph_title, title)
-        print("\n\n")
+        player_mp_graph(self.range_level, self.range_mp, graph_title, graph, title)
 
     def range_element_weak(self, name_element, char_weak_number):
         self.name_element = name_element
@@ -136,12 +139,13 @@ class Player:
                         axis=1
                     )
 
-    def show_element_weak(self):
-        print("[DEBUG] ~ WEAKNESSES")
-        print("[DEBUG] List of characters elements: ", self.name_element)
-        print("[DEBUG] List of characters elements stats: ")
-        print(self.element_container)
-        print("\n\n")
+    def show_element_weak(self, debug):
+        if debug:
+            print("[DEBUG] ~ WEAKNESSES")
+            print("[DEBUG] List of characters elements: ", self.name_element)
+            print("[DEBUG] List of characters elements stats: ")
+            print(self.element_container)
+            print("\n\n")
 
     def range_stats(self, name_stats, stats_max_value, stats_to_assign):
         self.name_stats = name_stats
@@ -191,13 +195,14 @@ class Player:
         for i in range(len(stats_max_value)):
             np.random.shuffle(self.stats_container[:, i])
 
-    def show_range_stats(self, graph_title, title=None):
-        print("[DEBUG] ~ STATS")
-        print("List of characters stats: ")
-        print(self.stats_container)
+    def show_range_stats(self, graph_title, graph=None, title=None, debug=None):
+        if debug:
+            print("[DEBUG] ~ STATS")
+            print("List of characters stats: ")
+            print(self.stats_container)
+            print("\n\n")
 
-        player_stats_graph(self.stats_container, self.range_level, self.name_stats, graph_title, title)
-        print("\n\n")
+        player_stats_graph(self.stats_container, self.range_level, self.name_stats, graph_title, graph, title)
 
     @staticmethod
     def set_level_container(data_container, column_info, max_level, range_level):
@@ -416,6 +421,6 @@ class Player:
         print("[RESULT] All Player Character Stats: \n")
         print(self.data_container)
 
-        print("\n[DEBUG] Current TOTAL STATS: ", self.stats_container.sum(axis=0), "\n")
+        print("\n[DEBUG] Current TOTAL STATS: ", self.stats_container.sum(axis=0))
 
         self.data_container.to_csv('csv_output_result/PlayerStats.csv', index=True)
