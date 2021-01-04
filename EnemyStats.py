@@ -1,4 +1,3 @@
-from EnemyDataContainer import Enemy
 import datetime
 
 """
@@ -17,6 +16,7 @@ Notes:
   check the values.
 """
 
+from EnemyDataContainer import Enemy
 
 def all_enemies():
     # Initialize with ENEMIES NUMBER and MAX LEVELS
@@ -28,26 +28,26 @@ def all_enemies():
     [RANGE ENEMIES NAME]
     Set the "enemy_name" variable to string to automatically generate names
     Example:
-        enemy_name = "Enemy"
+        enemy_name = 'Enemy'
     
     Set the "enemy_name" variable to list or array to manually generate name
     Example:
-      enemy_name = ["alpha", "beta", "charlie", "delta"]
+      enemy_name = ['alpha', 'beta', 'charlie', 'delta']
     """
-    enemy_name = "Enemy"
-    enemies.range_enemy_name(enemy_name, "Name", auto="yes")
+    enemy_name = 'Enemy'
+    enemies.range_enemy_name(enemy_name, 'Name', auto='yes')
 
     # [RANGE ENEMIES LEVELS]
     min_level = 1
-    levels_class = ["Easy", "Medium", "High"]
+    levels_class = ['Easy', 'Medium', 'High']
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Title
-    graph_title = "Player Level Distribution"
-    title = False
+    graph_title = 'Enemy Level Distribution'
+    title = True
 
     enemies.range_levels(min_level, levels_class, 'Levels', debug, scale=len(levels_class))
     enemies.show_range_levels(graph_title, graph, title, debug)
@@ -68,12 +68,12 @@ def all_enemies():
     enemy_type = ['Mixed', 'Hard Magic', 'Soft Magic', 'Hard Strength', 'Soft Strength']
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Title
-    graph_title = "Enemy Level Distribution"
-    title = False
+    graph_title = 'Enemy Level Distribution'
+    title = True
 
     # Distribution percentage (distribute_percent) example:
     # distribute_percent = [40, 10, 20, 10, 20]
@@ -93,12 +93,12 @@ def all_enemies():
     damage_name = ['Normal', 'Repel', 'Weak']
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Title
-    graph_title = "Enemy Element Distribution"
-    title = False
+    graph_title = 'Enemy Element Distribution'
+    title = True
 
     # Override this function when have different weaknesses concept!
     enemies.range_element_weak(element_name, damage_name)
@@ -110,12 +110,12 @@ def all_enemies():
     basic_min_stats = [2, 2, 2, 2, 2]
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Title
-    graph_title = "Enemy Stats Distribution"
-    title = False
+    graph_title = 'Enemy Stats Distribution'
+    title = True
 
     enemies.range_stats(stats_name, basic_min_stats, basic_max_stats, debug)
     enemies.show_range_stats(graph_title, graph, title, debug)
@@ -124,7 +124,7 @@ def all_enemies():
     enemies.generate_enemy()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     begin_time = datetime.datetime.now()
     all_enemies()
-    print("\nTime to run this program: ", datetime.datetime.now() - begin_time)
+    print('\nTime to run this program: ', datetime.datetime.now() - begin_time)

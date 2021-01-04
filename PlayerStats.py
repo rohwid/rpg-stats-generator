@@ -1,4 +1,3 @@
-from PlayerDataContainer import Player
 import datetime
 
 """
@@ -17,6 +16,7 @@ Notes:
   check the values.
 """
 
+from PlayerDataContainer import Player
 
 def protagonist_char():
     # Initialize with PLAYERS MAX LEVELS
@@ -37,12 +37,12 @@ def protagonist_char():
     next_hp = 228
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Graph Title
-    graph_title = "Player HP Distribution"
-    title = False
+    graph_title = 'Player HP Distribution'
+    title = True
 
     protagonist.range_health_points(start_hp, next_hp, 'HP')
     protagonist.show_range_health_points(graph_title, graph, title, debug)
@@ -52,12 +52,12 @@ def protagonist_char():
     next_mp = 102
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Graph Title
-    graph_title = "Player MP Distribution"
-    title = False
+    graph_title = 'Player MP Distribution'
+    title = True
 
     protagonist.range_magic_points(start_mp, next_mp, 'MP')
     protagonist.show_range_magic_points(graph_title, graph, title, debug)
@@ -85,12 +85,12 @@ def protagonist_char():
     stats_to_assign = [2, 1]
 
     # Show Graph and Debug
-    graph = False
+    graph = True
     debug = False
 
     # Show Graph Title
-    graph_title = "Player Stats Distribution"
-    title = False
+    graph_title = 'Player Stats Distribution'
+    title = True
 
     protagonist.range_stats(name_stats, stats_max_value, stats_to_assign)
     protagonist.show_range_stats(graph_title, graph, title, debug)
@@ -99,7 +99,7 @@ def protagonist_char():
     protagonist.generate_stats()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     begin_time = datetime.datetime.now()
     protagonist_char()
-    print("\nTime to run this program: ", datetime.datetime.now() - begin_time)
+    print('\nTime to run this program: ', datetime.datetime.now() - begin_time)

@@ -1,3 +1,4 @@
+import os
 import sys
 import numpy as np
 import pandas as pd
@@ -55,7 +56,7 @@ class Player:
             if len(column_info) == 2:
                 column_info.append(column_name)
             else:
-                sys.exit("[ERROR] Please define HP and Level first!")
+                sys.exit('[ERROR] Please define HP and Level first!')
 
         return column_info
 
@@ -67,10 +68,10 @@ class Player:
 
     def show_range_levels(self, debug):
         if debug:
-            print("[DEBUG] ~ LEVELS")
-            print("[DEBUG] Range Levels: ")
+            print('[DEBUG] ~ LEVELS')
+            print('[DEBUG] Range Levels: ')
             print(self.range_level)
-            print("\n\n")
+            print('\n\n')
 
     def range_health_points(self, start_hp, second_hp, column_name):
         self.range_hp = np.arange(
@@ -83,10 +84,10 @@ class Player:
 
     def show_range_health_points(self, graph_title, graph=None, title=None, debug=None):
         if debug:
-            print("[DEBUG] ~ NAMES")
-            print("[DEBUG] Range HP: ")
+            print('[DEBUG] ~ NAMES')
+            print('[DEBUG] Range HP: ')
             print(self.range_hp)
-            print("\n\n")
+            print('\n\n')
 
         player_hp_graph(self.range_level, self.range_hp, graph_title, graph, title)
 
@@ -101,10 +102,10 @@ class Player:
 
     def show_range_magic_points(self, graph_title, graph=None, title=None, debug=None):
         if debug:
-            print("[DEBUG] ~ MP")
-            print("[DEBUG] Range MP: ")
+            print('[DEBUG] ~ MP')
+            print('[DEBUG] Range MP: ')
             print(self.range_mp)
-            print("\n\n")
+            print('\n\n')
 
         player_mp_graph(self.range_level, self.range_mp, graph_title, graph, title)
 
@@ -141,11 +142,11 @@ class Player:
 
     def show_element_weak(self, debug):
         if debug:
-            print("[DEBUG] ~ WEAKNESSES")
-            print("[DEBUG] List of characters elements: ", self.name_element)
-            print("[DEBUG] List of characters elements stats: ")
+            print('[DEBUG] ~ WEAKNESSES')
+            print('[DEBUG] List of characters elements: ', self.name_element)
+            print('[DEBUG] List of characters elements stats: ')
             print(self.element_container)
-            print("\n\n")
+            print('\n\n')
 
     def range_stats(self, name_stats, stats_max_value, stats_to_assign):
         self.name_stats = name_stats
@@ -197,10 +198,10 @@ class Player:
 
     def show_range_stats(self, graph_title, graph=None, title=None, debug=None):
         if debug:
-            print("[DEBUG] ~ STATS")
-            print("List of characters stats: ")
+            print('[DEBUG] ~ STATS')
+            print('List of characters stats: ')
             print(self.stats_container)
-            print("\n\n")
+            print('\n\n')
 
         player_stats_graph(self.stats_container, self.range_level, self.name_stats, graph_title, graph, title)
 
@@ -210,7 +211,7 @@ class Player:
             data_container[column_info[0]] = range_level
             return data_container
         else:
-            sys.exit("[ERROR] The levels not match with the rows of data container!")
+            sys.exit('[ERROR] The levels not match with the rows of data container!')
 
     @staticmethod
     def set_hp_container(data_container, column_info, max_level, range_hp):
@@ -219,7 +220,7 @@ class Player:
 
             return data_container
         else:
-            sys.exit("[ERROR] The HP's rows not match with the rows of data container!")
+            sys.exit('[ERROR] The HP\'s rows not match with the rows of data container!')
 
     @staticmethod
     def set_mp_container(data_container, column_info, max_level, range_mp):
@@ -228,7 +229,7 @@ class Player:
 
             return data_container
         else:
-            sys.exit("[ERROR] The MP's rows not match with the rows of data container!")
+            sys.exit('[ERROR] The MP\'s rows not match with the rows of data container!')
 
     @staticmethod
     def set_element_container(data_container, init_column, column_info, max_level, element_container):
@@ -246,7 +247,7 @@ class Player:
 
             return data_container
         else:
-            sys.exit("[ERROR] The Element's rows not match with the rows of data container!")
+            sys.exit('[ERROR] The Element\'s rows not match with the rows of data container!')
 
     @staticmethod
     def set_stats(data_container, init_column, column_info, max_level, stats_container):
@@ -273,7 +274,7 @@ class Player:
 
             return data_container
         else:
-            sys.exit("[ERROR] The Stats's rows not match with the rows of data container!")
+            sys.exit('[ERROR] The Stats\'s rows not match with the rows of data container!')
 
     def generate_stats(self):
         row_level = np.arange((self.max_level - (self.max_level - self.start_level)), self.max_level + 1)
@@ -418,9 +419,11 @@ class Player:
 
         pd.set_option('display.max_rows', 200)
 
-        print("[RESULT] All Player Character Stats: \n")
+        print('[RESULT] All Player Character Stats: \n')
         print(self.data_container)
 
-        print("\n[DEBUG] Current TOTAL STATS: ", self.stats_container.sum(axis=0))
+        print('\n[DEBUG] Current TOTAL STATS: ', self.stats_container.sum(axis=0))
 
-        self.data_container.to_csv('csv_output_result/PlayerStats.csv', index=True)
+        current_work_dir = os.path.dirname(os.path.abspath(__file__))
+
+        self.data_container.to_csv(current_work_dir + '/csv_output_result/PlayerStats.csv', index=True)

@@ -1,3 +1,4 @@
+import os
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,8 +23,8 @@ Notes:
 
 from Model import var_val, mean_values
 
-colorDB = ["#E74C3C", "#8E44AD", "#3498DB", "#27AE60", "#F39C12", "#707B7C", "#2C3E50"]
-
+color_db = ['#E74C3C', '#8E44AD', '#3498DB', '#27AE60', '#F39C12', '#707B7C', '#2C3E50']
+current_work_dir = os.path.dirname(os.path.abspath(__file__))
 
 def init_plt():
     plt.rcParams['figure.figsize'] = (12, 8)
@@ -52,7 +53,7 @@ def label_3d_fig(axes, x_name, y_name, z_name, pad_size, size):
     axes.zaxis.labelpad = pad_size
 
 
-def player_hp_graph(hp, level, graph_title, graph, title):
+def player_hp_graph(level, hp, graph_title, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -61,18 +62,18 @@ def player_hp_graph(hp, level, graph_title, graph, title):
     axes = fig.add_axes([0.1, 0.1, 0.8, 0.8])
     axes.plot(level, hp, color='#2980B9')
 
-    label_2d_fig(axes, "Levels", "Player HP", 26, 16)
+    label_2d_fig(axes, 'Levels', 'Player HP', 25, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
-    fig.savefig('graph_output_result/PlayerHpDistribution.png')
+    fig.savefig(current_work_dir + '/graph_output_result/PlayerHpDistribution.png')
 
     if graph:
         plt.show()
 
 
-def player_mp_graph(mp, level, graph_title, graph, title):
+def player_mp_graph(level, mp, graph_title, graph, title):
     init_plt()
 
     fig = plt.figure()
@@ -80,12 +81,12 @@ def player_mp_graph(mp, level, graph_title, graph, title):
     axes = fig.add_axes([0.1, 0.1, 0.8, 0.8])  # left, button, width, height (range 0 to 1)
     axes.plot(level, mp, color='#2980B9')
 
-    label_2d_fig(axes, "Levels", "Player MP", 25, 16)
+    label_2d_fig(axes, 'Levels', 'Player MP', 25, 16)
 
     if graph_title != "" and title is not None and title:
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
-    fig.savefig('graph_output_result/PlayerMpDistribution.png')
+    fig.savefig(current_work_dir + '/graph_output_result/PlayerMpDistribution.png')
 
     if graph:
         plt.show()
@@ -111,13 +112,13 @@ def player_stats_graph(stats, level, name_stats, graph_title, graph, title):
     for i in range(stats_graph.shape[1]):
         axes.plot(level, stats_graph[:, i], label=name_stats[i])
 
-    label_2d_fig(axes, "Levels", "Player Stats", 25, 16)
+    label_2d_fig(axes, 'Levels', 'Player Stats', 25, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
     axes.legend()
-    fig.savefig('graph_output_result/PlayerStatsDistribution.png')
+    fig.savefig(current_work_dir + '/graph_output_result/PlayerStatsDistribution.png')
 
     if graph:
         plt.show()
@@ -131,10 +132,10 @@ def enemy_level_graph(range_level, graph_title, graph, title):
 
     label_2d_plot('Levels', 'Enemy(n)', 25, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         plt.title(graph_title, fontsize=20, fontweight='bold')
 
-    plt.savefig('graph_output_result/EnemyLevelDistribution.png')
+    plt.savefig(current_work_dir + '/graph_output_result/EnemyLevelDistribution.png')
 
     if graph:
         plt.show()
@@ -150,12 +151,12 @@ def enemy_level_normal_distribution(range_level, graph_title, graph, title):
     x = np.linspace(mean - 3 * sigma, mean + 3 * sigma, len(range_level))
     plt.plot(x, norm.pdf(x, mean, sigma))
 
-    label_2d_plot('Levels', 'Enemies(n)', 25, 16)
+    label_2d_plot('Levels', 'Enemy(n)', 25, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         plt.title(graph_title, fontsize=20, fontweight='bold')
 
-    plt.savefig('graph_output_result/EnemyLevelDistributionNormal.png')
+    plt.savefig(current_work_dir + '/graph_output_result/EnemyLevelDistributionNormal.png')
 
     if graph:
         plt.show()
@@ -175,12 +176,12 @@ def enemy_type_graph(enemy_type, enemies_type, graph_title, graph, title):
     plt.bar(name, count_enemies, color='#2980B9', width=0.5, align='center')
     plt.xticks(name, enemy_type, fontsize=12)
 
-    label_2d_plot('Types', 'Enemies(n)', 25, 16)
+    label_2d_plot('Types', 'Enemy(n)', 25, 16)
 
-    if graph_title != "" and title is not None and title:
-        plt.title('Enemies Type Distribution', fontsize=20, fontweight='bold')
+    if graph_title != '' and title is not None and title:
+        plt.title('Enemy Type Distribution', fontsize=20, fontweight='bold')
 
-    plt.savefig('graph_output_result/EnemyTypeDistribution.png')
+    plt.savefig(current_work_dir + '/graph_output_result/EnemyTypeDistribution.png')
 
     if graph:
         plt.show()
@@ -214,15 +215,15 @@ def enemy_weak_graph(element_name, damage_name, weak_container, graph_title, gra
     # Add xticks on the middle of the group bars
     plt.xticks([r + bar_width for r in range(len(element_name))], element_name)
 
-    label_2d_plot('Weaknesses', 'Enemies(n)', 25, 16)
+    label_2d_plot('Weaknesses', 'Enemy(n)', 25, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         plt.title(graph_title, fontsize=20, fontweight='bold')
 
     # Create legend & Show graphic
     plt.legend()
 
-    plt.savefig('graph_output_result/EnemyWeakDistribution.png')
+    plt.savefig(current_work_dir + '/graph_output_result/EnemyWeakDistribution.png')
 
     if graph:
         plt.show()
@@ -236,12 +237,12 @@ def enemy_hp_graph(level, enemy_name, hp, graph, title):
     name_enemies = np.arange(0, len(enemy_name))
     axes.scatter(level, name_enemies, hp, color='#2980B9')
 
-    label_3d_fig(axes, "Levels", "Enemies(n)", "HP", 20, 16)
+    label_3d_fig(axes, 'Levels', 'Enemy(n)', 'HP', 20, 16)
 
     if title is not None and title:
-        axes.set_title("Enemies HP Stats Distribution", fontsize=20, fontweight='bold')
+        axes.set_title('Enemy HP Stats Distribution', fontsize=20, fontweight='bold')
 
-    fig.savefig('graph_output_result/EnemyHpDistribution.png')
+    fig.savefig(current_work_dir + '/graph_output_result/EnemyHpDistribution.png')
 
     if graph:
         plt.show()
@@ -256,12 +257,12 @@ def enemy_mp_graph(level, enemy_name, mp, graph, title):
     name_enemies = np.arange(0, len(enemy_name))
     axes.scatter(level, name_enemies, mp, color='#2980B9')
 
-    label_3d_fig(axes, "Levels", "Enemies(n)", "MP", 20, 16)
+    label_3d_fig(axes, 'Levels', 'Enemy(n)', 'MP', 20, 16)
 
     if title is not None and title:
-        axes.set_title("Enemies MP Stats Distribution", fontsize=20, fontweight='bold')
+        axes.set_title('Enemy MP Stats Distribution', fontsize=20, fontweight='bold')
 
-    fig.savefig('graph_output_result/EnemyMpDistribution.png')
+    fig.savefig(current_work_dir + '/graph_output_result/EnemyMpDistribution.png')
 
     if graph:
         plt.show()
@@ -275,7 +276,7 @@ def enemy_stats_graph(level, enemy_name, stats_name, stats_container, graph_titl
     for i in range(stats_container.shape[1]):
         i_stats_name = stats_name[i]
         i_stats_container = stats_container[:, i]
-        color = colorDB[i]
+        color = color_db[i]
         parted_enemy_stats(level, enemies, i_stats_name, i_stats_container, color, graph, title)
 
 
@@ -288,16 +289,16 @@ def single_stats_graph(level, enemies_name, stats_name, stats_container, graph_t
     enemies = np.arange(0, len(enemies_name))
 
     for i in range(stats_container.shape[1]):
-        axes.scatter(level, enemies, stats_container[:, i], color=colorDB[i], label=stats_name[i])
+        axes.scatter(level, enemies, stats_container[:, i], color=color_db[i], label=stats_name[i])
 
-    label_3d_fig(axes, "Levels", "Enemies(n)", "Stats", 20, 16)
+    label_3d_fig(axes, 'Levels', 'Enemy(n)', 'Stats', 20, 16)
 
-    if graph_title != "" and title is not None and title:
+    if graph_title != '' and title is not None and title:
         axes.set_title(graph_title, fontsize=20, fontweight='bold')
 
     axes.legend()
 
-    fig.savefig('graph_output_result/EnemyStatsDistribute.png')
+    fig.savefig(current_work_dir + '/graph_output_result/EnemyStatsDistribute.png')
 
     if graph:
         plt.show()
@@ -311,13 +312,12 @@ def parted_enemy_stats(level, enemies, stats_name, stats_container, selected_col
 
     axes.scatter(level, enemies, stats_container, color=selected_color, label=stats_name)
 
-    label_3d_fig(axes, "Levels", "Enemies(n)", "Stats", 20, 16)
+    label_3d_fig(axes, 'Levels', 'Enemy(n)', 'Stats', 20, 16)
 
     if title is not None and title:
-        axes.set_title("Enemies " + stats_name + " Stats Distribution", fontsize=20, fontweight='bold')
+        axes.set_title('Enemy ' + stats_name + ' Stats Distribution', fontsize=20, fontweight='bold')
 
-    save_stats_name = "graph_output_result/Enemy" + stats_name + "Distribute"
-    fig.savefig(save_stats_name)
+    fig.savefig(current_work_dir + '/graph_output_result/Enemy' + stats_name + 'Distribute')
 
     if graph:
         plt.show()
