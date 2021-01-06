@@ -16,7 +16,7 @@ This comment below uses to install all the required package of this program.
 
         $ pip install -r requirement.txt
 
-## How to run in Linux or Windwos
+## How to run in Linux or Windows
 
 This comment uses to generate the player stats or gameplay attributes:
 
@@ -30,11 +30,11 @@ This comment uses to generate the enemy stats or gameplay attributes:
 
 This program contain these files and folders:
 
-+ `PlayerStats.py`: This is the main script or interfaces for generate player stats, override the function if you want make some change or try different algorithm.
++ `PlayerStats.py`: The main script or interfaces for generate player stats, override the function if you want make some change or try different algorithm.
 + `PlayerDataContainer.py`: The script which handle all operation include the main algorithm in every function and handle data container management. The data container mean, the process to combine all generated data into player stats.
-+ `EnemyStats.py`: This is the main script or interfaces for generate enemy stats, override the function if you want make some change or try different algorithm.
++ `EnemyStats.py`: The main script or interfaces for generate enemy stats, override the function if you want make some change or try different algorithm.
 + `EnemyDataContainer.py`: The script which handle all operation include the main algorithm in every function and handle data container management. The data container mean, the process to combine all generated data into enemy stats.
 + `Model.py`: Just contain common function or algorithm such as customable round number and etc.
 + `Visualization.py`: The script to create the visualization of the data distribution.
-+ `csv_output_result`: This is the output of the program, all the player and enemy stats as the result of the process with `.CSV` format will be appear here.
-+ `graph_output_result`: This is the visualization of the program's output, all the graphs represents all the player and enemy stats.
++ `csv_output_result`: The output of the program, all the player and enemy stats as the result of the process with `.CSV` format will be appear here.
++ `graph_output_result`: The visualization of the program's output, all the graphs represents all the player and enemy stats.
