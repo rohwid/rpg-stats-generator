@@ -1,6 +1,6 @@
 # Generate turn-based and action RPG stats
 
-The main purpose of this program is to generate turn-based and action RPG stats or game attributes, it generats with k-NN and Naive Bayes algorithm. 
+The main purpose of this program is to generate RPG stats or game attributes, it generates with k-NN and Naive Bayes algorithm. The output of the program is `.CSV` files and also represents with graphs.
 
 ## Prerequisite
 
